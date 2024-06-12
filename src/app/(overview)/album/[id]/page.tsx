@@ -13,11 +13,7 @@ const handleSearchSubmit = () => {
 
 export default function AlbumPage({ params }: { params: { id: string } }) {
     const { id } = params;
-    const commands = [
-        { value: 'calendar', label: 'Calendar' },
-        { value: 'search-emoji', label: 'Search Emoji' },
-        { value: 'calculator', label: 'Calculator' },
-    ];
+
     return (
         <section>
             <div className="flex flex-col gap-8">
