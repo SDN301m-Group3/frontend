@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getAuthHeader } from './action';
-import { Group } from './define';
+import { Album, Group, GroupMember } from './define';
 
 axios.defaults.baseURL = process.env.API_URL;
 
@@ -16,3 +16,30 @@ export async function getMyGroups() {
             return [] as Group[];
         });
 }
+
+export const getAlbumsByGroup = async (groupId: string) => {
+    try {
+        const response = await axios.get(`/groups/${groupId}/albums`, {
+            headers: await getAuthHeader(),
+        });
+        console.log(response.data);
+        return response.data as Album[];
+    } catch (error) {
+        // console.log(error);
+        return [] as Album[];
+    }
+};
+
+export const getGroupMembers = async (groupId: string) => {
+    try {
+        const response = await axios.get(
+            `/groups/${groupId}/members?limit=10`,
+            {
+                headers: await getAuthHeader(),
+            }
+        );
+        return response.data as GroupMember[];
+    } catch (error) {
+        return [] as GroupMember[];
+    }
+};

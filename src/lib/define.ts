@@ -45,3 +45,22 @@ export type RecentImage = {
         title: string;
     };
 };
+
+export type Album = {
+    _id: string;
+    title: string;
+    description: string;
+    photos: [
+        {
+            _id: string;
+            url: string;
+        }
+    ];
+};
+
+export type GroupMember = {
+    _id: string;
+    username: string;
+    fullName: string;
+    img: string;
+};
