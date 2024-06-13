@@ -7,7 +7,7 @@ export const AlbumItem = ({ album }: { album: Album }) => {
             <Image
                 fill
                 className="w-full object-cover m-0"
-                src={album.imageUrl}
+                src={album.photos[0].url || 'background/nobackground.png'}
                 alt="veggtables"
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkAAIAAAoAAv/lxKUAAAAASUVORK5CYII="

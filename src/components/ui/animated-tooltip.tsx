@@ -16,7 +16,7 @@ export const AnimatedTooltip = ({
         _id: string;
         username: string;
         fullName: string;
-        image: string;
+        img: string;
     }[];
 }) => {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -83,7 +83,7 @@ export const AnimatedTooltip = ({
                         onMouseMove={handleMouseMove}
                         height={100}
                         width={100}
-                        src={item.image}
+                        src={item.img || '/avatar/noavatar.png'}
                         alt={item.username}
                         className="object-cover !m-0 !p-0 object-top rounded-full h-14 w-14 border-2 group-hover:scale-105 group-hover:z-30 border-white  relative transition duration-500"
                     />
