@@ -1,20 +1,21 @@
 import AlbumList from '@/components/overview/group/album-list';
 import GroupMembers from '@/components/overview/group/group-members';
+import GroupSettingDialog from '@/components/overview/group/group-setting/group-setting-dialog';
 import SearchAlbum from '@/components/overview/group/search-album';
 import { BasicTooltip } from '@/components/shared/tool-tip';
 import { Button } from '@/components/ui/button';
+import { getGroupInfo } from '@/lib/data';
+import { Settings } from 'lucide-react';
 import { Suspense } from 'react';
 
-const handleSearchChange = (value: string) => {
-    console.log(value);
-};
-
-const handleSearchSubmit = () => {
-    console.log('search submitted');
-};
-
-export default function GroupPage({ params }: { params: { id: string } }) {
+export default async function GroupPage({
+    params,
+}: {
+    params: { id: string };
+}) {
     const { id } = params;
+
+    const group = await getGroupInfo(id);
 
     return (
         <div className="">
@@ -24,9 +25,12 @@ export default function GroupPage({ params }: { params: { id: string } }) {
             </div>
             <div className="sm:flex sm:justify-between">
                 <h1 className="text-4xl font-bold">
-                    <BasicTooltip title={`Group ${id}`} />
+                    <BasicTooltip title={`Group: ${group.title}`} />
                 </h1>
-                <Button>Create new album</Button>
+                <div className="flex justify-between">
+                    <Button>Create new album</Button>
+                    <GroupSettingDialog group={group} />
+                </div>
             </div>
             <Suspense fallback={<div>Loading...</div>}>
                 <AlbumList groupId={id} />
