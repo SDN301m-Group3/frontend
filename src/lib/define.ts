@@ -64,3 +64,33 @@ export type GroupMember = {
     fullName: string;
     img: string;
 };
+
+export type GroupInfo = {
+    _id: string;
+    owner: {
+        _id: string;
+        email: string;
+        fullName: string;
+        img: string;
+    };
+    title: string;
+    description: string;
+    groupCode: string;
+    albums: [
+        {
+            _id: string;
+            title: string;
+            description: string;
+        }
+    ];
+    members: [
+        {
+            _id: string;
+            username: string;
+            email: string;
+            fullName: string;
+            img: string;
+        }
+    ];
+    createdAt: string;
+};
