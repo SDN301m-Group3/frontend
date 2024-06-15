@@ -15,10 +15,12 @@ export const AlbumItem = ({ album }: { album: Album }) => {
             {/* overlay */}
             <div className="absolute inset-0 from-black/95 via-black/70 to-black/10 bg-gradient-to-t"></div>
             <div className="p-4 absolute inset-0 flex flex-col justify-end size-full ">
-                <h3 className="text-xl font-bold text-gray-100 tracking-tighter mt-3 mb-2">
+                <h3 className="text-xl font-bold text-gray-100 tracking-tighter mt-3 mb-2 line-clamp-1">
                     {album.title}
                 </h3>
-                <p className="text-gray-100">{album.description}</p>
+                <p className="text-gray-100 line-clamp-2">
+                    {album.description}
+                </p>
             </div>
         </div>
     );
