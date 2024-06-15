@@ -36,7 +36,7 @@ export default async function AlbumPage({
             <div className="flex flex-col gap-8">
                 <SearchPhoto />
                 <div className="flex justify-between">
-                    <h1 className="text-4xl font-bold">
+                    <h1 className="text-4xl font-bold" id="album-name">
                         <BasicTooltip title={`Album: ${album.title}`} />
                     </h1>
                     <div className="flex justify-between">
