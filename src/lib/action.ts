@@ -238,7 +238,7 @@ export const joinGroup = async (formData: z.infer<typeof joinGroupSchema>) => {
         .post(
             '/groups/join',
             {
-                code,
+                groupCode: code,
             },
             {
                 headers: await getAuthHeader(),
