@@ -1,6 +1,16 @@
 import axios from 'axios';
 import { getAuthHeader } from './action';
-import { Album, Group, GroupInfo, GroupMember } from './define';
+import {
+    Album,
+    AlbumInfo,
+    AlbumMember,
+    Group,
+    GroupInfo,
+    GroupMember,
+    PageMeta,
+    Photo,
+    SearchPhotoParams,
+} from './define';
 
 axios.defaults.baseURL = process.env.API_URL;
 
@@ -35,10 +45,8 @@ export const getAlbumsByGroup = async (groupId: string) => {
         const response = await axios.get(`/groups/${groupId}/albums`, {
             headers: await getAuthHeader(),
         });
-        console.log(response.data);
         return response.data as Album[];
     } catch (error) {
-        // console.log(error);
         return [] as Album[];
     }
 };
@@ -57,6 +65,17 @@ export const getGroupMembers = async (groupId: string) => {
     }
 };
 
+export const getAlbumMembers = async (album: string) => {
+    try {
+        const response = await axios.get(`/albums/${album}/members?limit=10`, {
+            headers: await getAuthHeader(),
+        });
+        return response.data as AlbumMember[];
+    } catch (error) {
+        return [] as AlbumMember[];
+    }
+};
+
 export const getGroupInfo = async (groupId: string) => {
     try {
         const response = await axios.get(`/groups/${groupId}`, {
@@ -65,5 +84,49 @@ export const getGroupInfo = async (groupId: string) => {
         return response.data as GroupInfo;
     } catch (error) {
         return {} as GroupInfo;
+    }
+};
+
+export const getAlbumInfo = async (albumId: string) => {
+    try {
+        const response = await axios.get(`/albums/${albumId}`, {
+            headers: await getAuthHeader(),
+        });
+        return response.data as AlbumInfo;
+    } catch (error) {
+        return {} as AlbumInfo;
+    }
+};
+
+const pageMetaDefault = {
+    totalPages: 0,
+    page: 0,
+    pageSize: 0,
+    hasNext: false,
+    hasPrev: false,
+} as PageMeta;
+
+export const getPhotosByAlbumId = async (
+    albumId: string,
+    searchParams: SearchPhotoParams
+) => {
+    try {
+        const { photos, pageMeta } = await axios
+            .get(`/albums/${albumId}/photos`, {
+                headers: await getAuthHeader(),
+                params: searchParams,
+            })
+            .then((res) => {
+                return {
+                    photos: res.data.photos as Photo[],
+                    pageMeta: res.data.pageMeta as PageMeta,
+                };
+            });
+        return { photos, pageMeta };
+    } catch (error) {
+        return {
+            photos: [] as Photo[],
+            pageMeta: pageMetaDefault as PageMeta,
+        };
     }
 };

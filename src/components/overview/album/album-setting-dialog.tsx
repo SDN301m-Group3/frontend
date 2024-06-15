@@ -1,19 +1,18 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { GroupInfo, User } from '@/lib/define';
+import { AlbumInfo, GroupInfo, User } from '@/lib/define';
 import { Settings } from 'lucide-react';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import GroupInformation from './group-info';
 import { getUser } from '@/lib/action';
-import GroupMembers from './group-memebers';
-import GroupAlbums from './group-albums';
 import { cn } from '@/lib/utils';
+import AlbumInformation from './album-info';
+import AlbumMembersSetting from './album-members-setting';
 
-export default async function GroupSettingDialog({
-    group,
+export default async function AlbumSettingDialog({
+    album,
 }: {
-    group: GroupInfo;
+    album: AlbumInfo;
 }) {
     const user = (await getUser()) as User;
     return (
@@ -28,28 +27,24 @@ export default async function GroupSettingDialog({
                     <TabsList
                         className={cn(
                             'grid w-full',
-                            group.owner._id === user?.aud
-                                ? 'grid-cols-4'
-                                : 'grid-cols-3'
+                            album?.owner?._id === user?.aud
+                                ? 'grid-cols-3'
+                                : 'grid-cols-2'
                         )}
                     >
                         <TabsTrigger value="information">
                             Information
                         </TabsTrigger>
                         <TabsTrigger value="memebers">Memebers</TabsTrigger>
-                        <TabsTrigger value="albums">Albums</TabsTrigger>
-                        {group.owner._id === user?.aud && (
+                        {album?.owner?._id === user?.aud && (
                             <TabsTrigger value="Setting">Setting</TabsTrigger>
                         )}
                     </TabsList>
                     <TabsContent value="information">
-                        <GroupInformation group={group} user={user} />
+                        <AlbumInformation album={album} user={user} />
                     </TabsContent>
                     <TabsContent value="memebers">
-                        <GroupMembers group={group} user={user} />
-                    </TabsContent>
-                    <TabsContent value="albums">
-                        <GroupAlbums group={group} />
+                        <AlbumMembersSetting album={album} user={user} />
                     </TabsContent>
                     <TabsContent value="Setting">Setting</TabsContent>
                 </Tabs>

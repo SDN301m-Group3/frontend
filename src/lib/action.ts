@@ -238,7 +238,6 @@ export const createAlbum = async (
 ) => {
     const { title, description }: z.infer<typeof createAlbumFormSchema> =
         formData;
-    console.log(title, description);
     const response = await axios
         .post(
             `/groups/${groupId}/create-album`,
@@ -251,14 +250,12 @@ export const createAlbum = async (
             }
         )
         .then((res) => {
-            console.log('co cahy');
             return {
                 isSuccess: true,
                 error: '',
             };
         })
         .catch((error) => {
-            console.log('ko chay');
             return {
                 isSuccess: false,
                 error: error.response.data.error.message || 'Unknown error',
