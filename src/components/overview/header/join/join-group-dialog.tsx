@@ -43,6 +43,7 @@ import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 export default function JoinGroupDialog() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
+    const [open, setOpen] = useState(false);
     const [result, setResult] = useState<
         { error?: string; errorType?: string; isSuccess?: boolean } | undefined
     >(undefined);
@@ -62,13 +63,14 @@ export default function JoinGroupDialog() {
         } else {
             toast.success('Join group successfully');
             setResult({ isSuccess: true });
+            setOpen(false);
             router.push('/group');
             router.refresh();
         }
         setIsLoading(false);
     }
     return (
-        <AlertDialog>
+        <AlertDialog open={open} onOpenChange={setOpen}>
             <AlertDialogTrigger asChild>
                 <div className=" w-full flex justify-between relative select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 cursor-pointer hover:bg-accent hover:text-accent-foreground">
                     <div>Join Group</div>
