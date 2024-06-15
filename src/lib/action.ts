@@ -2,10 +2,11 @@
 
 import { z } from 'zod';
 import {
+    createAlbumFormSchema,
     createGroupFormSchema,
-    joinGroupSchema,
     loginFormSchema,
     registerFormSchema,
+    joinGroupSchema,
 } from './form-schema';
 import axios, { AxiosError } from 'axios';
 import { cookies } from 'next/headers';
@@ -21,7 +22,7 @@ export async function refreshAccessToken(token: string) {
         .post(`/auth/refresh-token`, {
             refreshToken: token,
         })
-        .then(res => {
+        .then((res) => {
             return res.data as AuthResponse;
         });
 }
@@ -73,7 +74,7 @@ export const login = async (formData: z.infer<typeof loginFormSchema>) => {
                 email,
                 password,
             })
-            .then(res => {
+            .then((res) => {
                 const { accessToken, refreshToken } = res.data;
 
                 let payload = atob(accessToken.split('.')[1]);
@@ -93,7 +94,7 @@ export const login = async (formData: z.infer<typeof loginFormSchema>) => {
                     error: '',
                 };
             })
-            .catch(error => {
+            .catch((error) => {
                 return {
                     isSuccess: false,
                     error: error.response.data.error.message || 'Unknown error',
@@ -166,13 +167,13 @@ export const register = async (
                 phoneNumber,
                 password,
             })
-            .then(res => {
+            .then((res) => {
                 return {
                     isSuccess: true,
                     error: '',
                 };
             })
-            .catch(error => {
+            .catch((error) => {
                 return {
                     isSuccess: false,
                     error: error.response.data.error.message || 'Unknown error',
@@ -215,19 +216,55 @@ export const createGroup = async (
                 headers: await getAuthHeader(),
             }
         )
-        .then(res => {
+        .then((res) => {
             return {
                 isSuccess: true,
                 error: '',
             };
         })
-        .catch(error => {
+        .catch((error) => {
             return {
                 isSuccess: false,
                 error: error.response.data.error.message || 'Unknown error',
             };
         });
 
+    return response;
+};
+
+export const createAlbum = async (
+    formData: z.infer<typeof createAlbumFormSchema>,
+    groupId: string
+) => {
+    const { title, description }: z.infer<typeof createAlbumFormSchema> =
+        formData;
+    console.log(title, description);
+    const response = await axios
+        .post(
+            `/groups/${groupId}/create-album`,
+            {
+                title,
+                description,
+            },
+            {
+                headers: await getAuthHeader(),
+            }
+        )
+        .then((res) => {
+            console.log('co cahy');
+            return {
+                isSuccess: true,
+                error: '',
+            };
+        })
+        .catch((error) => {
+            console.log('ko chay');
+            return {
+                isSuccess: false,
+                error: error.response.data.error.message || 'Unknown error',
+            };
+        });
+    console.log(response);
     return response;
 };
 
@@ -244,13 +281,13 @@ export const joinGroup = async (formData: z.infer<typeof joinGroupSchema>) => {
                 headers: await getAuthHeader(),
             }
         )
-        .then(res => {
+        .then((res) => {
             return {
                 isSuccess: true,
                 error: '',
             };
         })
-        .catch(error => {
+        .catch((error) => {
             return {
                 isSuccess: false,
                 error: error.response.data.error.message || 'Unknown error',
