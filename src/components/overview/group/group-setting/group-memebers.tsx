@@ -34,8 +34,7 @@ export default function GroupMembers({
                                             ? 'Owner'
                                             : 'Member'}
                                         : {member.fullName}{' '}
-                                        {group.owner._id === user?.aud &&
-                                            '(Me)'}
+                                        {member._id === user?.aud && '(Me)'}
                                     </p>
                                     <p className="text-xs leading-none text-muted-foreground">
                                         Email: {member.email}
