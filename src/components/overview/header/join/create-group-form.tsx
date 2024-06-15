@@ -23,7 +23,11 @@ import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-export default function CreateGroupForm() {
+export default function CreateGroupForm({
+    setOpen,
+}: {
+    setOpen: (open: boolean) => void;
+}) {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [result, setResult] = useState<
@@ -49,6 +53,7 @@ export default function CreateGroupForm() {
         } else {
             toast.success('Group created successfully');
             setResult({ isSuccess: true });
+            setOpen(false);
             router.push('/group');
             router.refresh();
         }

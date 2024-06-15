@@ -64,3 +64,9 @@ export const createAlbumFormSchema = z.object({
     .or(z.literal(""))
     .transform((e) => (e === "" ? undefined : e)),
 });
+
+export const joinGroupSchema = z.object({
+    code: z.string().min(6, {
+        message: 'Group code must be 6 characters.',
+    }),
+});

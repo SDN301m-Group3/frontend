@@ -8,6 +8,7 @@ import GroupInformation from './group-info';
 import { getUser } from '@/lib/action';
 import GroupMembers from './group-memebers';
 import GroupAlbums from './group-albums';
+import { cn } from '@/lib/utils';
 
 export default async function GroupSettingDialog({
     group,
@@ -24,7 +25,14 @@ export default async function GroupSettingDialog({
             </DialogTrigger>
             <DialogContent className="sm:max-w-[650px]">
                 <Tabs defaultValue="information" className="w-full mt-3">
-                    <TabsList className="grid w-full grid-cols-4">
+                    <TabsList
+                        className={cn(
+                            'grid w-full',
+                            group.owner._id === user?.aud
+                                ? 'grid-cols-4'
+                                : 'grid-cols-3'
+                        )}
+                    >
                         <TabsTrigger value="information">
                             Information
                         </TabsTrigger>

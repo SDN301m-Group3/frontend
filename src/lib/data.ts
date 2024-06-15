@@ -9,10 +9,23 @@ export async function getMyGroups() {
         .get(`/groups/my-groups`, {
             headers: await getAuthHeader(),
         })
-        .then(res => {
+        .then((res) => {
             return res.data as Group[];
         })
-        .catch(error => {
+        .catch((error) => {
+            return [] as Group[];
+        });
+}
+
+export async function getJoinedGroups() {
+    return await axios
+        .get(`/groups/all-groups`, {
+            headers: await getAuthHeader(),
+        })
+        .then((res) => {
+            return res.data as Group[];
+        })
+        .catch((error) => {
             return [] as Group[];
         });
 }

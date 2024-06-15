@@ -21,8 +21,10 @@ export default function GroupInformation({
     return (
         <Card>
             <CardHeader>
-                <CardTitle>{group.title}</CardTitle>
-                <CardDescription>{group.description}</CardDescription>
+                <CardTitle className="line-clamp-1">{group.title}</CardTitle>
+                <CardDescription className="line-clamp-2">
+                    {group.description}
+                </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
                 <div>
