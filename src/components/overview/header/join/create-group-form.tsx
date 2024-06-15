@@ -49,7 +49,7 @@ export default function CreateGroupForm() {
         } else {
             toast.success('Group created successfully');
             setResult({ isSuccess: true });
-            router.push('/groups');
+            router.push('/group');
             router.refresh();
         }
         setIsLoading(false);
