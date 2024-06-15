@@ -4,6 +4,7 @@ import GroupList from '@/components/overview/home/group/group-list';
 import LandingPage from '@/components/overview/home/landing-page/landing-page';
 import { RecentViewList } from '@/components/overview/home/recent-view/recent-view-list';
 import { getUser } from '@/lib/action';
+import { Suspense } from 'react';
 
 const message = [
     [0, 4, 'Good night'],
@@ -40,9 +41,13 @@ export default async function Home() {
                         </p>
                     </div>
                     <span className={`text-2xl font-bold`}>My Group</span>
-                    <GroupList />
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <GroupList />
+                    </Suspense>
                     <span className={`text-2xl font-bold`}>Recent View</span>
-                    <RecentViewList />
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <RecentViewList />
+                    </Suspense>
                 </div>
             ) : (
                 <LandingPage />

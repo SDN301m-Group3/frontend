@@ -10,8 +10,8 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 import { Users } from 'lucide-react';
-import CreateAlbumForm from './create-album-form';
 import { useState } from 'react';
+import CreateAlbumForm from './create-album-form';
 
 export default function CreateAlbumDialog({ groupId }: { groupId: string }) {
     const [open, setOpen] = useState(false);

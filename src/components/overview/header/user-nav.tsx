@@ -45,6 +45,12 @@ export function UserNav({ user }: { user: User }) {
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                         <DropdownMenuItem asChild className="cursor-pointer">
+                            <Link href={'/group'}>Group</Link>
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem asChild className="cursor-pointer">
                             <Link href={'/profile'}>Profile</Link>
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
