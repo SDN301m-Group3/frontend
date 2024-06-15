@@ -11,7 +11,9 @@ export function GroupItem({ group }: { group: Group }) {
             href={`/group/${group._id}`}
         >
             <DirectionAwareHover imageUrl={imageUrl}>
-                <p className="font-bold text-xl">Group: {group.title}</p>
+                <p className="font-bold text-xl line-clamp-1">
+                    Group: {group.title}
+                </p>
                 <p className="font-normal text-sm">
                     Owner: {group.owner.fullName} ({group.owner.email})
                 </p>
@@ -19,7 +21,9 @@ export function GroupItem({ group }: { group: Group }) {
                     {group.numberOfMembers} members - {group.numberOfAlbums}{' '}
                     albums
                 </p>
-                <p className="font-normal text-sm">{group.description}</p>
+                <p className="font-normal text-sm line-clamp-2">
+                    {group.description}
+                </p>
                 {/* <p className="font-normal text-sm">12 members - 125 pictures</p> */}
             </DirectionAwareHover>
         </Link>
