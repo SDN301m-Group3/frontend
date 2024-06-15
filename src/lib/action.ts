@@ -3,6 +3,7 @@
 import { z } from 'zod';
 import {
     createGroupFormSchema,
+    joinGroupSchema,
     loginFormSchema,
     registerFormSchema,
 } from './form-schema';
@@ -209,6 +210,35 @@ export const createGroup = async (
             {
                 title,
                 description,
+            },
+            {
+                headers: await getAuthHeader(),
+            }
+        )
+        .then(res => {
+            return {
+                isSuccess: true,
+                error: '',
+            };
+        })
+        .catch(error => {
+            return {
+                isSuccess: false,
+                error: error.response.data.error.message || 'Unknown error',
+            };
+        });
+
+    return response;
+};
+
+export const joinGroup = async (formData: z.infer<typeof joinGroupSchema>) => {
+    const { code }: z.infer<typeof joinGroupSchema> = formData;
+
+    const response = await axios
+        .post(
+            '/groups/join',
+            {
+                code,
             },
             {
                 headers: await getAuthHeader(),
