@@ -171,4 +171,5 @@ export type SearchPhotoParams = {
     page?: number;
     pageSize?: number;
     published?: string;
+    search?: string;
 };

@@ -3,6 +3,7 @@ import { GroupItem } from '@/components/overview/home/group/group-item';
 import GroupList from '@/components/overview/home/group/group-list';
 import LandingPage from '@/components/overview/home/landing-page/landing-page';
 import { RecentViewList } from '@/components/overview/home/recent-view/recent-view-list';
+import SpinLoading from '@/components/shared/spin-loading';
 import { getUser } from '@/lib/action';
 import { Suspense } from 'react';
 
@@ -41,11 +42,11 @@ export default async function Home() {
                         </p>
                     </div>
                     <span className={`text-2xl font-bold`}>My Group</span>
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<SpinLoading />}>
                         <GroupList />
                     </Suspense>
                     <span className={`text-2xl font-bold`}>Recent View</span>
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<SpinLoading />}>
                         <RecentViewList />
                     </Suspense>
                 </div>

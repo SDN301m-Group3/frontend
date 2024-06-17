@@ -2,6 +2,7 @@ import AlbumMembers from '@/components/overview/album/album-members';
 import AlbumSettingDialog from '@/components/overview/album/album-setting-dialog';
 import PhotoList from '@/components/overview/album/photo-list';
 import PhotoUploadDialog from '@/components/overview/album/photo-upload-dialog';
+import SearchBadge from '@/components/overview/album/search-badge';
 import SearchPhoto from '@/components/overview/album/search-photo';
 import SortSelect from '@/components/shared/sort-select';
 import SpinLoading from '@/components/shared/spin-loading';
@@ -51,11 +52,19 @@ export default async function AlbumPage({
                     </div>
                 </div>
 
-                <SortSelect
-                    sort={searchParams.sort}
-                    options={selectOptions}
-                    url={`/album/${id}`}
-                />
+                <div className="flex gap-2 items-center">
+                    <SortSelect
+                        sort={searchParams.sort}
+                        options={selectOptions}
+                        url={`/album/${id}`}
+                    />
+                    <div>
+                        {searchParams.search && (
+                            <SearchBadge query={searchParams.search} />
+                        )}
+                    </div>
+                </div>
+
                 <Suspense
                     key={
                         searchParams.page ||

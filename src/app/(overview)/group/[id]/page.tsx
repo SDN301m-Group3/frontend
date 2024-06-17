@@ -39,8 +39,6 @@ export default async function GroupPage({
             <Suspense fallback={<SpinLoading />}>
                 <AlbumList groupId={id} />
             </Suspense>
-            {/* <SearchForm commands={commands} /> */}
-            {/* <GalleryGrid images={results.resources} /> */}
         </div>
     );
 }
