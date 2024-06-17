@@ -1,7 +1,7 @@
 import { AnimatedTooltipPreview } from '@/components/shared/animated-tooltip-preview';
-import { getGroupMembers } from '@/lib/data';
+import { getAlbumMembers } from '@/lib/data';
 
-export default async function AlbumMembers({ groupId }: { groupId: string }) {
-    const members = await getGroupMembers(groupId);
+export default async function AlbumMembers({ albumId }: { albumId: string }) {
+    const members = await getAlbumMembers(albumId);
     return <AnimatedTooltipPreview people={members} />;
 }

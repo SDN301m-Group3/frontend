@@ -1,11 +1,14 @@
+import AlbumMembers from '@/components/overview/album/album-members';
 import AlbumSettingDialog from '@/components/overview/album/album-setting-dialog';
 import PhotoList from '@/components/overview/album/photo-list';
+import PhotoUploadDialog from '@/components/overview/album/photo-upload-dialog';
 import SearchPhoto from '@/components/overview/album/search-photo';
 import SortSelect from '@/components/shared/sort-select';
+import SpinLoading from '@/components/shared/spin-loading';
 import { BasicTooltip } from '@/components/shared/tool-tip';
-import { Button } from '@/components/ui/button';
 import { getAlbumInfo, getPhotosByAlbumId } from '@/lib/data';
 import { SearchPhotoParams, SortOption } from '@/lib/define';
+import { Suspense } from 'react';
 
 const selectOptions = [
     {
@@ -33,14 +36,17 @@ export default async function AlbumPage({
 
     return (
         <section>
-            <div className="flex flex-col gap-8">
+            <div>
                 <SearchPhoto />
+                <div className="my-5">
+                    <AlbumMembers albumId={id} />
+                </div>
                 <div className="flex justify-between">
                     <h1 className="text-4xl font-bold" id="album-name">
                         <BasicTooltip title={`Album: ${album.title}`} />
                     </h1>
                     <div className="flex justify-between">
-                        <Button>Upload</Button>
+                        <PhotoUploadDialog albumId={id} />
                         <AlbumSettingDialog album={album} />
                     </div>
                 </div>
@@ -50,7 +56,15 @@ export default async function AlbumPage({
                     options={selectOptions}
                     url={`/album/${id}`}
                 />
-                <PhotoList _id={id} searchParams={searchParams} />
+                <Suspense
+                    key={
+                        searchParams.page ||
+                        '1' + searchParams.sort + searchParams.pageSize
+                    }
+                    fallback={<SpinLoading />}
+                >
+                    <PhotoList _id={id} searchParams={searchParams} />
+                </Suspense>
                 {/* <SearchForm commands={commands} /> */}
                 {/* <GalleryGrid images={results.resources} /> */}
             </div>

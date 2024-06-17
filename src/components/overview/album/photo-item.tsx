@@ -4,9 +4,10 @@ import Image from 'next/image';
 type PhotoItemProps = {
     image: string;
     _id: string;
+    title: string;
 };
 
-const PhotoItem = ({ image, _id }: PhotoItemProps) => {
+const PhotoItem = ({ image, _id, title }: PhotoItemProps) => {
     return (
         <>
             <div>
@@ -18,7 +19,7 @@ const PhotoItem = ({ image, _id }: PhotoItemProps) => {
                             height={1000}
                             // objectFit="cover"
                             // objectPosition="50%,50%"
-                            alt="Photo"
+                            alt={title}
                         />
                     </div>
                 </Link>

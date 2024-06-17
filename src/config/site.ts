@@ -1,5 +1,5 @@
 export const siteConfig = {
-    name: 'Site name',
+    name: 'Fotoco',
     url: 'http://localhost:3000',
 };
 
