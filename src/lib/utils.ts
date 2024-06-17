@@ -1,5 +1,5 @@
 import { type ClassValue, clsx } from 'clsx';
-import { format, isThisYear } from 'date-fns';
+import { format, formatDistanceToNow, isThisYear } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import { ReadonlyURLSearchParams } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
@@ -22,4 +22,11 @@ export const createUrl = (
     const queryString = `${paramsString.length ? '?' : ''}${paramsString}`;
 
     return `${pathname}${queryString}`;
+};
+
+export const getFormatDistanceToNow = (params: string) => {
+    const date = new Date(params);
+    return formatDistanceToNow(date, {
+        addSuffix: true,
+    });
 };

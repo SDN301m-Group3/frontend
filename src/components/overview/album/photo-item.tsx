@@ -14,12 +14,13 @@ const PhotoItem = ({ image, _id, title }: PhotoItemProps) => {
                 <Link href={`/photo/${_id}`}>
                     <div className={`group relative cursor-pointer`}>
                         <Image
+                            className="object-cover rounded-lg h-full"
                             src={image}
                             width={1000}
                             height={1000}
                             // objectFit="cover"
                             // objectPosition="50%,50%"
-                            alt={title}
+                            alt="Photo"
                         />
                     </div>
                 </Link>
