@@ -17,6 +17,7 @@ const buildPhotoItems = (photos: Photo[]) => {
                             key={filteredPhoto._id}
                             image={filteredPhoto.url}
                             _id={filteredPhoto._id}
+                            title={filteredPhoto.title}
                         />
                     ))}
             </div>

@@ -21,7 +21,7 @@ export default function AlbumMembersSetting({
                                 <Avatar className="border-solid border-sky-500 border-2 w-[40px] h-[40px]">
                                     <AvatarImage
                                         src={
-                                            album?.owner?.img ||
+                                            member?.img ||
                                             '/avatar/noavatar.png'
                                         }
                                         alt="picture"

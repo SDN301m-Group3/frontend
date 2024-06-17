@@ -3,6 +3,7 @@ import CreateAlbumDialog from '@/components/overview/group/create-album-dialog';
 import GroupMembers from '@/components/overview/group/group-members';
 import GroupSettingDialog from '@/components/overview/group/group-setting/group-setting-dialog';
 import SearchAlbum from '@/components/overview/group/search-album';
+import SpinLoading from '@/components/shared/spin-loading';
 import { BasicTooltip } from '@/components/shared/tool-tip';
 import { Button } from '@/components/ui/button';
 import { getGroupInfo } from '@/lib/data';
@@ -35,7 +36,7 @@ export default async function GroupPage({
                     <GroupSettingDialog group={group} />
                 </div>
             </div>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<SpinLoading />}>
                 <AlbumList groupId={id} />
             </Suspense>
             {/* <SearchForm commands={commands} /> */}

@@ -293,3 +293,55 @@ export const joinGroup = async (formData: z.infer<typeof joinGroupSchema>) => {
 
     return response;
 };
+
+export const uploadImage = async (formData: FormData, path?: string) => {
+    if (!path) {
+        path = '/upload/default';
+    }
+    // return axios
+    //     .post(path, formData, {
+    //         headers: await getAuthHeader(),
+    //     })
+    //     .then((res) => {
+    //         return {
+    //             isSuccess: true,
+    //             error: '',
+    //         };
+    //     })
+    //     .catch((error) => {
+    //         return {
+    //             isSuccess: false,
+    //             error: error.response.data.error.message || 'Unknown error',
+    //         };
+    //     });
+
+    return {
+        isSuccess: true,
+        url: 'https://plus.unsplash.com/premium_photo-1718088301356-d762d95d754a?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    };
+};
+
+export const addPhoto = async (formData: any, albumId: string) => {
+    // return axios
+    //     .post(`/album/${albumId}/upload`, formData,
+    //         {
+    //             headers: await getAuthHeader(),
+    //         }
+    //     )
+    //     .then((res) => {
+    //         return {
+    //             isSuccess: true,
+    //             error: '',
+    //         };
+    //     })
+    //     .catch((error) => {
+    //         return {
+    //             isSuccess: false,
+    //             error: error.response.data.error.message || 'Unknown error',
+    //         };
+    //     });
+    return {
+        isSuccess: true,
+        error: '',
+    };
+};
