@@ -35,7 +35,7 @@ export default async function AlbumSettingDialog({
                         <TabsTrigger value="information">
                             Information
                         </TabsTrigger>
-                        <TabsTrigger value="memebers">Memebers</TabsTrigger>
+                        <TabsTrigger value="members">Members</TabsTrigger>
                         {album?.owner?._id === user?.aud && (
                             <TabsTrigger value="Setting">Setting</TabsTrigger>
                         )}
@@ -43,7 +43,7 @@ export default async function AlbumSettingDialog({
                     <TabsContent value="information">
                         <AlbumInformation album={album} user={user} />
                     </TabsContent>
-                    <TabsContent value="memebers">
+                    <TabsContent value="members">
                         <AlbumMembersSetting album={album} user={user} />
                     </TabsContent>
                     <TabsContent value="Setting">Setting</TabsContent>

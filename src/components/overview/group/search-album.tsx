@@ -13,7 +13,11 @@ const handleSearchSubmit = () => {
 export default function SearchAlbum() {
     return (
         <PlaceholdersAndVanishInput
-            placeholders={['Search images here', 'Find images by tag']}
+            placeholders={[
+                'Search album here',
+                'Find album by title',
+                'Find album by description',
+            ]}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 handleSearchChange(e.target.value)
             }

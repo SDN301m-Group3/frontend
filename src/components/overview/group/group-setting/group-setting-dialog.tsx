@@ -36,7 +36,7 @@ export default async function GroupSettingDialog({
                         <TabsTrigger value="information">
                             Information
                         </TabsTrigger>
-                        <TabsTrigger value="memebers">Memebers</TabsTrigger>
+                        <TabsTrigger value="members">Members</TabsTrigger>
                         <TabsTrigger value="albums">Albums</TabsTrigger>
                         {group.owner._id === user?.aud && (
                             <TabsTrigger value="Setting">Setting</TabsTrigger>
@@ -45,7 +45,7 @@ export default async function GroupSettingDialog({
                     <TabsContent value="information">
                         <GroupInformation group={group} user={user} />
                     </TabsContent>
-                    <TabsContent value="memebers">
+                    <TabsContent value="members">
                         <GroupMembers group={group} user={user} />
                     </TabsContent>
                     <TabsContent value="albums">
