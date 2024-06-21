@@ -63,7 +63,7 @@ export default async function GroupPage({
                 )}
             </div>
             <Suspense fallback={<SpinLoading />}>
-                <AlbumList groupId={id} />
+                <AlbumList groupId={id} searchParams={searchParams} />
             </Suspense>
         </div>
     );
