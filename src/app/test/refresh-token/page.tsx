@@ -1,6 +1,3 @@
-import { Button } from '@/components/ui/button';
-import { updateToken } from '@/lib/fe-api';
-
 export default function RefreshTokenPage() {
     return (
         <div>

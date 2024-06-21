@@ -6,6 +6,8 @@ const maxAgeRefreshToken = 60 * 60 * 24 * 365;
 export const POST = async (req: NextRequest) => {
     try {
         const { accessToken, refreshToken } = await req.json();
+        console.log('accessToken', accessToken);
+        console.log('refreshToken', refreshToken);
 
         const response = NextResponse.json({}, { status: 200 });
 

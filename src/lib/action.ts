@@ -23,7 +23,21 @@ export async function refreshAccessToken(token: string) {
             refreshToken: token,
         })
         .then((res) => {
+            const { accessToken, refreshToken } = res.data;
+            let payload = atob(accessToken.split('.')[1]);
+            const user = JSON.parse(payload) as User;
+
+            cookies().set('refresh-token', refreshToken, {
+                maxAge: maxAgeRefreshToken,
+            });
+            let expiryDate = new Date(user.exp * 1000);
+            cookies().set('access-token', accessToken, {
+                expires: expiryDate,
+            });
             return res.data as AuthResponse;
+        })
+        .catch((error) => {
+            throw error;
         });
 }
 
@@ -31,30 +45,30 @@ export async function getAuthHeader() {
     let oldAccessToken = cookies().get('access-token')?.value;
     let oldRefreshToken = cookies().get('refresh-token')?.value;
     let accessToken = oldAccessToken;
-    if (!oldAccessToken && oldRefreshToken) {
-        try {
-            const {
-                accessToken: newAccessToken,
-                refreshToken: newRefreshToken,
-            } = await refreshAccessToken(oldRefreshToken as string);
+    // if (!oldAccessToken && oldRefreshToken) {
+    //     try {
+    //         const {
+    //             accessToken: newAccessToken,
+    //             refreshToken: newRefreshToken,
+    //         } = await refreshAccessToken(oldRefreshToken as string);
 
-            let payload = atob(newAccessToken.split('.')[1]);
-            const user = JSON.parse(payload) as User;
+    //         let payload = atob(newAccessToken.split('.')[1]);
+    //         const user = JSON.parse(payload) as User;
 
-            cookies().set('refresh-token', newRefreshToken, {
-                maxAge: maxAgeRefreshToken,
-            });
-            accessToken = newAccessToken;
-            let expiryDate = new Date(user.exp * 1000);
-            cookies().set('access-token', newAccessToken, {
-                expires: expiryDate,
-            });
-        } catch (error) {
-            if (error instanceof AxiosError) {
-                console.log(error.response?.data);
-            }
-        }
-    }
+    //         cookies().set('refresh-token', newRefreshToken, {
+    //             maxAge: maxAgeRefreshToken,
+    //         });
+    //         accessToken = newAccessToken;
+    //         let expiryDate = new Date(user.exp * 1000);
+    //         cookies().set('access-token', newAccessToken, {
+    //             expires: expiryDate,
+    //         });
+    //     } catch (error) {
+    //         if (error instanceof AxiosError) {
+    //             console.log(error.response?.data);
+    //         }
+    //     }
+    // }
     if (accessToken) {
         return { Authorization: `Bearer ${accessToken}` };
     }
