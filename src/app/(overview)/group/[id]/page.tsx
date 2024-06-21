@@ -1,3 +1,4 @@
+import SearchBadge from '@/components/overview/album/search-badge';
 import AlbumList from '@/components/overview/group/album-list';
 import CreateAlbumDialog from '@/components/overview/group/create-album-dialog';
 import GroupMembers from '@/components/overview/group/group-members';
@@ -8,14 +9,16 @@ import SpinLoading from '@/components/shared/spin-loading';
 import { BasicTooltip } from '@/components/shared/tool-tip';
 import { Button } from '@/components/ui/button';
 import { getGroupInfo } from '@/lib/data';
-import { BreadItem } from '@/lib/define';
+import { BreadItem, SearchAlbumParams } from '@/lib/define';
 import { Settings } from 'lucide-react';
 import { Suspense } from 'react';
 
 export default async function GroupPage({
     params,
+    searchParams,
 }: {
     params: { id: string };
+    searchParams: SearchAlbumParams;
 }) {
     const { id } = params;
 
@@ -53,6 +56,11 @@ export default async function GroupPage({
                     </Button>
                     <GroupSettingDialog group={group} />
                 </div>
+            </div>
+            <div>
+                {searchParams.search && (
+                    <SearchBadge query={searchParams.search} />
+                )}
             </div>
             <Suspense fallback={<SpinLoading />}>
                 <AlbumList groupId={id} />

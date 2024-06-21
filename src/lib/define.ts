@@ -179,3 +179,7 @@ export type SearchPhotoParams = {
     published?: string;
     search?: string;
 };
+
+export type SearchAlbumParams = {
+    search?: string;
+};
