@@ -1,7 +1,7 @@
 'use client';
 
 import { refreshAccessToken } from '@/lib/action';
-import { updateToken } from '@/lib/fe-api';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 function getCookie(key: string) {
@@ -14,26 +14,19 @@ export function RefreshTokenProvider({
 }: {
     children: React.ReactNode;
 }) {
+    const router = useRouter();
     useEffect(() => {
         const interval = setInterval(async () => {
-            const oldRefreshToken = getCookie('refresh-token');
-            if (oldRefreshToken !== '') {
-                const {
-                    accessToken: newAccessToken,
-                    refreshToken: newRefreshToken,
-                } = await refreshAccessToken(oldRefreshToken as string);
-                const response = await updateToken(
-                    newAccessToken,
-                    newRefreshToken
-                );
-
-                if (response) {
-                    console.log('update token success');
-                } else {
-                    console.log('update token failed');
+            try {
+                const oldRefreshToken = getCookie('refresh-token');
+                if (oldRefreshToken !== '') {
+                    await refreshAccessToken(oldRefreshToken as string);
                 }
+            } catch (error) {
+                console.log('update token failed');
+                router.push('/logout');
             }
-        }, 1000 * 60 * 50); // 50 minutes
+        }, 1000 * 10); // 50 minutes
 
         return () => clearInterval(interval);
     }, []);
