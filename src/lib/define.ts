@@ -12,6 +12,12 @@ export type PageMeta = {
     hasPrev: boolean;
 };
 
+export type BreadItem = {
+    title: string;
+    url: string;
+    active: boolean;
+};
+
 export enum SearchParams {
     SORT = 'sort',
     PAGE = 'page',

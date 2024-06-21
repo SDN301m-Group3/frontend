@@ -4,11 +4,12 @@ import PhotoList from '@/components/overview/album/photo-list';
 import PhotoUploadDialog from '@/components/overview/album/photo-upload-dialog';
 import SearchBadge from '@/components/overview/album/search-badge';
 import SearchPhoto from '@/components/overview/album/search-photo';
+import BreadcrumbComponent from '@/components/shared/breadcrumb-component';
 import SortSelect from '@/components/shared/sort-select';
 import SpinLoading from '@/components/shared/spin-loading';
 import { BasicTooltip } from '@/components/shared/tool-tip';
 import { getAlbumInfo, getPhotosByAlbumId } from '@/lib/data';
-import { SearchPhotoParams, SortOption } from '@/lib/define';
+import { BreadItem, SearchPhotoParams, SortOption } from '@/lib/define';
 import { Suspense } from 'react';
 
 const selectOptions = [
@@ -35,6 +36,21 @@ export default async function AlbumPage({
 
     const album = await getAlbumInfo(id);
 
+    const breadItems = [
+        {
+            title: 'Group',
+            url: '/group',
+        },
+        {
+            title: album.group.title,
+            url: `/group/${album.group._id}`,
+        },
+        {
+            title: album.title,
+            url: `/album/${album._id}`,
+        },
+    ] as BreadItem[];
+
     return (
         <section>
             <div>
@@ -42,6 +58,11 @@ export default async function AlbumPage({
                 <div className="my-5">
                     <AlbumMembers albumId={id} />
                 </div>
+
+                <div className="my-2">
+                    <BreadcrumbComponent breadcrumbs={breadItems} />
+                </div>
+
                 <div className="flex justify-between">
                     <h1 className="text-4xl font-bold" id="album-name">
                         <BasicTooltip title={`Album: ${album.title}`} />
