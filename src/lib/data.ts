@@ -9,6 +9,7 @@ import {
     GroupMember,
     PageMeta,
     Photo,
+    SearchAlbumParams,
     SearchPhotoParams,
 } from './define';
 
@@ -40,10 +41,14 @@ export async function getJoinedGroups() {
         });
 }
 
-export const getAlbumsByGroup = async (groupId: string) => {
+export const getAlbumsByGroup = async (
+    groupId: string,
+    searchParams: SearchAlbumParams
+) => {
     try {
         const response = await axios.get(`/groups/${groupId}/albums`, {
             headers: await getAuthHeader(),
+            params: searchParams,
         });
         return response.data as Album[];
     } catch (error) {
