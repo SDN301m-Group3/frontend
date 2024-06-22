@@ -19,13 +19,15 @@ import {
     PopoverTrigger,
 } from '@/components/ui/popover';
 import { SearchUser } from '@/lib/define';
-import { getUsers, inviteUserToGroup } from '@/lib/action';
+import { getUser, getUsers, inviteUserToGroup } from '@/lib/action';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { Icons } from '@/components/icons/icons';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { toast } from 'sonner';
+import { useSocket } from '@/components/socket-io-provider';
+import { getGroupInfo } from '@/lib/data';
 
 const frameworks = [
     {
@@ -51,12 +53,14 @@ const frameworks = [
 ];
 
 export function SearchUsers({ groupId }: { groupId: string }) {
+    const { socket } = useSocket();
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState('');
     const [inputValue, setInputValue] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);
 
     const [users, setUsers] = React.useState([] as SearchUser[]);
+    const [user, setUser] = React.useState<SearchUser | null>(null);
 
     const handleValueChange = (value: string) => {
         setInputValue(value);
@@ -70,6 +74,12 @@ export function SearchUsers({ groupId }: { groupId: string }) {
         if (!result?.isSuccess) {
             toast.error(result?.error);
         } else {
+            if (socket) {
+                socket.emit(`sendNotification`, {
+                    type: 'USER',
+                    receivers: user,
+                });
+            }
             toast.success('Invite successfully');
         }
         setIsLoading(false);
@@ -131,6 +141,7 @@ export function SearchUsers({ groupId }: { groupId: string }) {
                                                     ? ''
                                                     : currentValue
                                             );
+                                            setUser(user);
                                             setOpen(false);
                                         }}
                                     >

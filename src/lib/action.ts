@@ -10,7 +10,13 @@ import {
 } from './form-schema';
 import axios, { AxiosError } from 'axios';
 import { cookies } from 'next/headers';
-import { AuthResponse, DemoUser, SearchUser, User } from './define';
+import {
+    AuthResponse,
+    DemoUser,
+    SearchUser,
+    User,
+    UserNotification,
+} from './define';
 // import cookie from '@boiseitguru/cookie-cutter';
 
 axios.defaults.baseURL = process.env.API_URL;
@@ -408,5 +414,37 @@ export const acceptInviteToGroup = async (
                 error: error.response.data.error.message || 'Unknown error',
             };
         });
+    return response;
+};
+
+export const getUserNotifications = async () => {
+    try {
+        const response = await axios.get('/notifications/my-notifications', {
+            headers: await getAuthHeader(),
+        });
+        return response.data as UserNotification[];
+    } catch (error) {
+        return [] as UserNotification[];
+    }
+};
+
+export const markNotificationAsSeen = async (notificationId: string) => {
+    const response = await axios
+        .put(`/notifications/${notificationId}/mark-as-seen`, undefined, {
+            headers: await getAuthHeader(),
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error.response.data.error.message || 'Unknown error',
+            };
+        });
+
     return response;
 };
