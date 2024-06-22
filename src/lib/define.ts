@@ -35,6 +35,7 @@ export type User = {
     email: string;
     username: string;
     fullName: string;
+    img: string;
     iat: number;
     exp: number;
     aud: string;
@@ -182,4 +183,12 @@ export type SearchPhotoParams = {
 
 export type SearchAlbumParams = {
     search?: string;
+};
+
+export type SearchUser = {
+    _id: string;
+    username: string;
+    fullName: string;
+    email: string;
+    img: string;
 };
