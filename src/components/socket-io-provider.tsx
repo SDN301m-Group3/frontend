@@ -1,5 +1,6 @@
 'use client';
 
+import { getUser } from '@/lib/action';
 import React, {
     createContext,
     useContext,
@@ -25,6 +26,13 @@ export function SocketIoProvider({ children }: SocketProviderProps) {
     useEffect(() => {
         const socketIo = io(process.env.NEXT_PUBLIC_SOCKET_IO_URL!);
         setSocket(socketIo);
+
+        getUser().then((user) => {
+            if (!user) {
+                return;
+            }
+            socketIo.emit('join', { userId: user.aud });
+        });
 
         return () => {
             socketIo.close();

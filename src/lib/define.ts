@@ -192,3 +192,19 @@ export type SearchUser = {
     email: string;
     img: string;
 };
+
+export type UserNotification = {
+    _id: string;
+    user: {
+        _id: string;
+        username: string;
+        email: string;
+        fullName: string;
+        img: string;
+    };
+    type: string;
+    receivers: string;
+    content: string;
+    seen: boolean;
+    redirectUrl: string;
+};

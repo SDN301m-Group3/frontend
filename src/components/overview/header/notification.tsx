@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell, Cloud } from 'lucide-react';
+import { Bell } from 'lucide-react';
 
 import {
     DropdownMenu,
@@ -9,17 +9,22 @@ import {
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-    DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { User } from '@/lib/define';
+import { User, UserNotification } from '@/lib/define';
 import { useEffect, useState } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useSocket } from '@/components/socket-io-provider';
+import { getUserNotifications, markNotificationAsSeen } from '@/lib/action';
+import { cn } from '@/lib/utils';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Notification({ user }: { user: User }) {
+    const router = useRouter();
     const { socket } = useSocket();
-    const [notification, setNotification] = useState<any[]>([]);
+    const [notification, setNotification] = useState<UserNotification[]>([]);
 
     // useEffect(() => {
     //     // const socketIoUrl = process.env.SOCKET_IO_URL as string;
@@ -28,9 +33,10 @@ export default function Notification({ user }: { user: User }) {
 
     useEffect(() => {
         if (socket) {
-            socket.on('connect', () => {
-                socket.on('getNotification', (data: any) => {
-                    setNotification(prev => [data, ...prev]);
+            socket.on('getNotification', (data: any) => {
+                getUserNotifications().then((data) => {
+                    console.log(data);
+                    setNotification(data);
                 });
             });
         }
@@ -42,7 +48,19 @@ export default function Notification({ user }: { user: User }) {
                 socket.off('getNotification');
             }
         };
-    }, [socket, user]);
+    }, [socket]);
+
+    useEffect(() => {
+        // Fetch notifications when the component mounts
+        getUserNotifications().then((data) => {
+            setNotification(data);
+        });
+    }, []);
+
+    const handleSeenNoti = async (notiId: UserNotification) => {
+        if (notiId.seen) return;
+        await markNotificationAsSeen(notiId._id);
+    };
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -52,14 +70,16 @@ export default function Notification({ user }: { user: User }) {
                             <Bell size={24} />
                         </button>
                         <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">
-                            {notification.length > 9
+                            {notification.filter((noti) => !noti.seen).length >
+                            9
                                 ? '9+'
-                                : notification.length}
+                                : notification.filter((noti) => !noti.seen)
+                                      .length}
                         </span>
                     </div>
                 </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
+            <DropdownMenuContent className="w-80">
                 <DropdownMenuLabel>My Notification</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <ScrollArea className="h-72 rounded-md border p-2">
@@ -68,19 +88,51 @@ export default function Notification({ user }: { user: User }) {
                             No notification
                         </div>
                     )}
-                    {notification.map((item, index) => (
-                        <div key={index}>
+                    {notification.map((noti, index) => (
+                        <Link
+                            href={noti.redirectUrl}
+                            key={index}
+                            onClick={() => handleSeenNoti(noti)}
+                        >
                             <DropdownMenuGroup>
                                 <DropdownMenuItem>
-                                    <Cloud className="mr-2 h-4 w-4" />
-                                    <span>{item.sender.fullName}</span>
-                                    <DropdownMenuShortcut>
-                                        {item.type || 'Unknown'}
-                                    </DropdownMenuShortcut>
+                                    <div
+                                        className={cn(
+                                            'flex flex-col',
+                                            noti.seen && 'text-slate-600'
+                                        )}
+                                    >
+                                        <div className="flex gap-2">
+                                            <Avatar className="border-solid border-sky-500 border-2 w-[40px] h-[40px]">
+                                                <AvatarImage
+                                                    src={
+                                                        user?.img ||
+                                                        '/avatar/noavatar.png'
+                                                    }
+                                                    alt="picture"
+                                                />
+                                                <AvatarFallback>
+                                                    {'A'}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            <div className="flex flex-col justify-around">
+                                                <p className="text-sm font-medium leading-none">
+                                                    {user?.fullName} (
+                                                    {user?.username})
+                                                </p>
+                                                <p className="text-xs leading-none text-muted-foreground">
+                                                    {user?.email}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <span className="mt-2">
+                                            {noti.content || 'No content'}
+                                        </span>
+                                    </div>
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
                             <DropdownMenuSeparator />
-                        </div>
+                        </Link>
                     ))}
                 </ScrollArea>
             </DropdownMenuContent>

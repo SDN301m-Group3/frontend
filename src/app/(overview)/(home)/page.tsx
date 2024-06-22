@@ -31,7 +31,6 @@ export default async function Home() {
         <>
             {user ? (
                 <div>
-                    <BtnSendNotiDemo user={user} />
                     <div className="w-full text-center mb-5">
                         <h1 className="text-2xl font-bold">
                             {getGreeting()}, {user.fullName}
