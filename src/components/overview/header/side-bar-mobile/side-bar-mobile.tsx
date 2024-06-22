@@ -50,8 +50,7 @@ export function SideBarMobile({ user }: { user: User }) {
                                 <Avatar className="h-[80px] w-[80px] border-[3px] border-sky-500">
                                     <AvatarImage
                                         src={
-                                            // session.user.img ||
-                                            '/avatar/noavatar.png'
+                                            user?.img || '/avatar/noavatar.png'
                                         }
                                         alt="avatar picture"
                                         width={100}
@@ -68,7 +67,7 @@ export function SideBarMobile({ user }: { user: User }) {
                     </div>
 
                     <div className="flex flex-col justify-center">
-                        {pages.map(page => (
+                        {pages.map((page) => (
                             <Link
                                 key={page.path}
                                 href={page.path}

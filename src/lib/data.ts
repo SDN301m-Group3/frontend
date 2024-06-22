@@ -11,6 +11,7 @@ import {
     Photo,
     SearchAlbumParams,
     SearchPhotoParams,
+    SearchUser,
 } from './define';
 
 axios.defaults.baseURL = process.env.API_URL;

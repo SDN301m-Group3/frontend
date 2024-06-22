@@ -24,7 +24,7 @@ export function UserNav({ user }: { user: User }) {
                     >
                         <Avatar className="border-solid border-sky-500 border-2 w-[40px] h-[40px]">
                             <AvatarImage
-                                src={'/avatar/noavatar.png'}
+                                src={user?.img || '/avatar/noavatar.png'}
                                 alt="picture"
                             />
                             <AvatarFallback>{'A'}</AvatarFallback>

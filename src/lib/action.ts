@@ -10,7 +10,7 @@ import {
 } from './form-schema';
 import axios, { AxiosError } from 'axios';
 import { cookies } from 'next/headers';
-import { AuthResponse, DemoUser, User } from './define';
+import { AuthResponse, DemoUser, SearchUser, User } from './define';
 // import cookie from '@boiseitguru/cookie-cutter';
 
 axios.defaults.baseURL = process.env.API_URL;
@@ -202,17 +202,6 @@ export const register = async (
     }
 };
 
-export const getUsers = async () => {
-    try {
-        const response = await axios.get('/users', {
-            headers: await getAuthHeader(),
-        });
-        return response.data as DemoUser[];
-    } catch (error) {
-        return [] as DemoUser[];
-    }
-};
-
 export const createGroup = async (
     formData: z.infer<typeof createGroupFormSchema>
 ) => {
@@ -358,4 +347,66 @@ export const addPhoto = async (formData: any, albumId: string) => {
         isSuccess: true,
         error: '',
     };
+};
+
+export const getUsers = async (search: string) => {
+    try {
+        const response = await axios.get('/users', {
+            headers: await getAuthHeader(),
+            params: { search },
+        });
+        return response.data as SearchUser[];
+    } catch (error) {
+        return [] as SearchUser[];
+    }
+};
+
+export const inviteUserToGroup = async (groupId: string, email: string) => {
+    const response = await axios
+        .post(
+            `/groups/${groupId}/invite`,
+            {
+                email,
+            },
+            {
+                headers: await getAuthHeader(),
+            }
+        )
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error.response.data.error.message || 'Unknown error',
+            };
+        });
+    return response;
+};
+
+export const acceptInviteToGroup = async (
+    groupId: string,
+    inviteToken: string
+) => {
+    const response = await axios
+        .post(`/groups/${groupId}/accept-invite`, undefined, {
+            headers: await getAuthHeader(),
+            params: { inviteToken },
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error.response.data.error.message || 'Unknown error',
+            };
+        });
+    return response;
 };
