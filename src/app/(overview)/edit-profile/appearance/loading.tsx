@@ -1,4 +1,4 @@
-import AppearanceFormLoading from '@/components/edit-profile/loading/appearance-form-loading';
+import AppearanceFormLoading from '@/components/overview/edit-profile/loading/appearance-form-loading';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 

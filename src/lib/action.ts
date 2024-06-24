@@ -7,6 +7,7 @@ import {
     loginFormSchema,
     registerFormSchema,
     joinGroupSchema,
+    editProfileFormSchema,
 } from './form-schema';
 import axios, { AxiosError } from 'axios';
 import { cookies } from 'next/headers';
@@ -344,4 +345,45 @@ export const addPhoto = async (formData: any, albumId: string) => {
         isSuccess: true,
         error: '',
     };
+};
+
+export const editProfile = async (
+    formData: z.infer<typeof editProfileFormSchema>
+) => {
+    const {
+        username,
+        fullName,
+        phoneNumber,
+        bio,
+        img,
+    }: z.infer<typeof editProfileFormSchema> = formData;
+
+    const response = await axios
+        .put(
+            '/users/edit-profile',
+            {
+                username,
+                fullName,
+                phoneNumber,
+                bio,
+                img,
+            },
+            {
+                headers: await getAuthHeader(),
+            }
+        )
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error.response.data.error.message || 'Unknown error',
+            };
+        });
+    // console.log('edit profile' + response);
+    return response;
 };

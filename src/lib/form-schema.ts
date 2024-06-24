@@ -95,3 +95,35 @@ export const uploadPhotoSchema = z.object({
             message: 'Tag must be unique',
         }),
 });
+
+export const editProfileFormSchema = z.object({
+    fullName: z
+        .string()
+        .min(3, { message: 'Full name must be at least 3 characters' })
+        .max(50, { message: 'Full name must be maximum 50 characters' })
+        .optional(),
+    username: z
+        .string()
+        .min(3, { message: 'Username must be at least 3 characters' })
+        .max(20, { message: 'Username must be maximum 50 characters' })
+        .optional(),
+    phoneNumber: z
+        .string()
+        .min(10, { message: 'Phone number must be at least 10 characters' })
+        .optional()
+        .or(z.literal(''))
+        .transform((e) => (e === '' ? undefined : e)),
+    password: z
+        .string()
+        .min(8, { message: 'Password must be at least 6 characters' })
+        .refine((password) => /^(?=.*[A-Za-z])(?=.*\d).+$/.test(password), {
+            message: 'Password must contain at least one letter and one number',
+        })
+        .optional(),
+    bio: z
+        .string()
+        .min(5, { message: 'Bio need more specify so need 10 characters' })
+        .max(200, { message: 'No one read it so keep it 200 characters' })
+        .optional(),
+    img: z.string().url({ message: 'Invalid image URL' }).optional(),
+});

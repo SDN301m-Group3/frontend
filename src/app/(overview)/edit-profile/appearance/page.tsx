@@ -1,4 +1,4 @@
-import { AppearanceForm } from '@/components/edit-profile/appearance/appearance-form';
+import { AppearanceForm } from '@/components/overview/edit-profile/appearance/appearance-form';
 import { Separator } from '@/components/ui/separator';
 import { Metadata } from 'next';
 

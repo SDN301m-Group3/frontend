@@ -1,4 +1,4 @@
-import { ProfileForm } from '@/components/edit-profile/profile-form';
+import { EditProfileForm } from '@/components/overview/edit-profile/edit-profile-form';
 import { Separator } from '@/components/ui/separator';
 // import { getUserLoginProfile } from '@/lib/data';
 
@@ -13,7 +13,7 @@ export default async function SettingsProfilePage() {
                 </p>
             </div>
             <Separator />
-            <ProfileForm />
+            <EditProfileForm />
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import ProfileFormLoading from '@/components/edit-profile/loading/profile-form-loading';
+import ProfileFormLoading from '@/components/overview/edit-profile/loading/profile-form-loading';
 import { Icons } from '@/components/icons/icons';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';

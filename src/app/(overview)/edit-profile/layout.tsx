@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import { Separator } from '@/components/ui/separator';
-import { SidebarNav } from '@/components/edit-profile/side-bar-nav';
+import { SidebarNav } from '@/components/overview/edit-profile/side-bar-nav';
 
 export const metadata: Metadata = {
     title: 'Edit your profile',

@@ -1,3 +1,5 @@
+'use server';
+
 import axios from 'axios';
 import { getAuthHeader } from './action';
 import {
@@ -10,6 +12,7 @@ import {
     PageMeta,
     Photo,
     SearchPhotoParams,
+    UserInfo,
 } from './define';
 
 axios.defaults.baseURL = process.env.API_URL;
@@ -128,5 +131,16 @@ export const getPhotosByAlbumId = async (
             photos: [] as Photo[],
             pageMeta: pageMetaDefault as PageMeta,
         };
+    }
+};
+
+export const getUserInfor = async () => {
+    try {
+        const response = await axios.get(`/users/user-info`, {
+            headers: await getAuthHeader(),
+        });
+        return response.data as UserInfo;
+    } catch (error) {
+        return {} as UserInfo;
     }
 };

@@ -173,3 +173,11 @@ export type SearchPhotoParams = {
     published?: string;
     search?: string;
 };
+
+export type UserInfo = {
+    fullName?: string;
+    username?: string;
+    phoneNumber?: string;
+    bio?: string;
+    img?: string;
+};
