@@ -20,7 +20,7 @@ const PhotoItem = ({ image, _id, title }: PhotoItemProps) => {
                             height={1000}
                             // objectFit="cover"
                             // objectPosition="50%,50%"
-                            alt="Photo"
+                            alt={title || 'Photo'}
                         />
                     </div>
                 </Link>
