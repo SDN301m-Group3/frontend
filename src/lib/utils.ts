@@ -29,4 +29,4 @@ export const getFormatDistanceToNow = (params: string) => {
     return formatDistanceToNow(date, {
         addSuffix: true,
     });
-};
+}; // dung cai nay
