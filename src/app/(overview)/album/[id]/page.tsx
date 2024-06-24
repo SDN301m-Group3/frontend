@@ -1,13 +1,17 @@
 import AlbumMembers from '@/components/overview/album/album-members';
 import AlbumSettingDialog from '@/components/overview/album/album-setting-dialog';
+import GalleryView from '@/components/overview/album/gallery-view';
 import PhotoList from '@/components/overview/album/photo-list';
 import PhotoUploadDialog from '@/components/overview/album/photo-upload-dialog';
 import SearchBadge from '@/components/overview/album/search-badge';
 import SearchPhoto from '@/components/overview/album/search-photo';
+import ToggleView from '@/components/overview/album/toggle-view';
 import BreadcrumbComponent from '@/components/shared/breadcrumb-component';
 import SortSelect from '@/components/shared/sort-select';
 import SpinLoading from '@/components/shared/spin-loading';
 import { BasicTooltip } from '@/components/shared/tool-tip';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { getAlbumInfo, getPhotosByAlbumId } from '@/lib/data';
 import { BreadItem, SearchPhotoParams, SortOption } from '@/lib/define';
 import { Suspense } from 'react';
@@ -73,28 +77,58 @@ export default async function AlbumPage({
                     </div>
                 </div>
 
-                <div className="flex gap-2 items-center">
-                    <SortSelect
-                        sort={searchParams.sort}
-                        options={selectOptions}
-                        url={`/album/${id}`}
-                    />
-                    <div>
-                        {searchParams.search && (
-                            <SearchBadge query={searchParams.search} />
-                        )}
+                <div className="flex justify-between">
+                    <div className="flex gap-2 items-center">
+                        <SortSelect
+                            sort={searchParams.sort}
+                            options={selectOptions}
+                            url={`/album/${id}`}
+                        />
+                        <div>
+                            {searchParams.search && (
+                                <SearchBadge query={searchParams.search} />
+                            )}
+                        </div>
                     </div>
+                    <ToggleView />
                 </div>
 
-                <Suspense
-                    key={
-                        searchParams.page ||
-                        '1' + searchParams.sort + searchParams.pageSize
-                    }
-                    fallback={<SpinLoading />}
-                >
-                    <PhotoList _id={id} searchParams={searchParams} />
-                </Suspense>
+                {searchParams.mode === 'gallery' ? (
+                    <Dialog>
+                        <DialogTrigger asChild className="cursor-pointer">
+                            <div className="w-full flex justify-center mt-5">
+                                <Button>Open Gallery</Button>
+                            </div>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[1000px] p-0 bg-transparent border-none">
+                            <Suspense
+                                key={
+                                    searchParams.page ||
+                                    '1' +
+                                        searchParams.sort +
+                                        searchParams.pageSize
+                                }
+                                fallback={<SpinLoading />}
+                            >
+                                <GalleryView
+                                    _id={id}
+                                    searchParams={searchParams}
+                                />
+                            </Suspense>
+                        </DialogContent>
+                    </Dialog>
+                ) : (
+                    <Suspense
+                        key={
+                            searchParams.page ||
+                            '1' + searchParams.sort + searchParams.pageSize
+                        }
+                        fallback={<SpinLoading />}
+                    >
+                        <PhotoList _id={id} searchParams={searchParams} />
+                    </Suspense>
+                )}
+
                 {/* <SearchForm commands={commands} /> */}
                 {/* <GalleryGrid images={results.resources} /> */}
             </div>
