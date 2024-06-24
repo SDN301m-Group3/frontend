@@ -75,10 +75,7 @@ export function SearchUsers({ groupId }: { groupId: string }) {
             toast.error(result?.error);
         } else {
             if (socket) {
-                socket.emit(`sendNotification`, {
-                    type: 'USER',
-                    receivers: user,
-                });
+                socket.emit(`sendNotification`, result?.data);
             }
             toast.success('Invite successfully');
         }

@@ -2,6 +2,7 @@ import SearchBadge from '@/components/overview/album/search-badge';
 import AlbumList from '@/components/overview/group/album-list';
 import CreateAlbumDialog from '@/components/overview/group/create-album-dialog';
 import GroupMembers from '@/components/overview/group/group-members';
+import GroupNotFound from '@/components/overview/group/group-not-found';
 import GroupSettingDialog from '@/components/overview/group/group-setting/group-setting-dialog';
 import SearchAlbum from '@/components/overview/group/search-album';
 import BreadcrumbComponent from '@/components/shared/breadcrumb-component';
@@ -9,7 +10,7 @@ import SpinLoading from '@/components/shared/spin-loading';
 import { BasicTooltip } from '@/components/shared/tool-tip';
 import { Button } from '@/components/ui/button';
 import { getGroupInfo } from '@/lib/data';
-import { BreadItem, SearchAlbumParams } from '@/lib/define';
+import { BreadItem, GroupInfo, SearchAlbumParams } from '@/lib/define';
 import { Settings } from 'lucide-react';
 import { Suspense } from 'react';
 
@@ -23,6 +24,9 @@ export default async function GroupPage({
     const { id } = params;
 
     const group = await getGroupInfo(id);
+    if (!group?._id) {
+        return <GroupNotFound />;
+    }
 
     const breadItems = [
         {
