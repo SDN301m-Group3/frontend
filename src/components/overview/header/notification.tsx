@@ -26,18 +26,13 @@ export default function Notification({ user }: { user: User }) {
     const { socket } = useSocket();
     const [notification, setNotification] = useState<UserNotification[]>([]);
 
-    // useEffect(() => {
-    //     // const socketIoUrl = process.env.SOCKET_IO_URL as string;
-    //     setSocket(io('http://localhost:8080'));
-    // }, []);
-
     useEffect(() => {
         if (socket) {
-            socket.on('getNotification', (data: any) => {
-                getUserNotifications().then((data) => {
-                    console.log(data);
-                    setNotification(data);
-                });
+            socket.on('getNotification', (data: UserNotification) => {
+                setNotification((prevNotifications) => [
+                    ...prevNotifications,
+                    data,
+                ]);
             });
         }
 
@@ -57,9 +52,21 @@ export default function Notification({ user }: { user: User }) {
         });
     }, []);
 
-    const handleSeenNoti = async (notiId: UserNotification) => {
-        if (notiId.seen) return;
-        await markNotificationAsSeen(notiId._id);
+    const handleSeenNoti = async (noti: UserNotification) => {
+        console.log('seen noti', noti);
+        if (noti.seen) return;
+        setNotification((prevNotifications) =>
+            prevNotifications.map((notificationItem) => {
+                if (notificationItem._id === noti._id) {
+                    return {
+                        ...notificationItem,
+                        seen: true,
+                    };
+                }
+                return notificationItem;
+            })
+        );
+        await markNotificationAsSeen(noti._id);
     };
     return (
         <DropdownMenu>
