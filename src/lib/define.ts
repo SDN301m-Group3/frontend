@@ -207,4 +207,5 @@ export type UserNotification = {
     content: string;
     seen: boolean;
     redirectUrl: string;
+    createdAt: string;
 };

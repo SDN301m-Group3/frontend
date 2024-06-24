@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useSocket } from '@/components/socket-io-provider';
 import { getUserNotifications, markNotificationAsSeen } from '@/lib/action';
-import { cn } from '@/lib/utils';
+import { cn, getFormatDistanceToNow } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -120,7 +120,7 @@ export default function Notification({ user }: { user: User }) {
                                                     {user?.fullName} (
                                                     {user?.username})
                                                 </p>
-                                                <p className="text-xs leading-none text-muted-foreground">
+                                                <p className="text-xs leading-none ">
                                                     {user?.email}
                                                 </p>
                                             </div>
@@ -128,6 +128,13 @@ export default function Notification({ user }: { user: User }) {
                                         <span className="mt-2">
                                             {noti.content || 'No content'}
                                         </span>
+                                        {/*getFormatDistanceToNow*/}
+                                        <div className="text-xs text-slate-400 mt-2">
+                                            {noti.createdAt &&
+                                                getFormatDistanceToNow(
+                                                    noti.createdAt
+                                                )}
+                                        </div>
                                     </div>
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
