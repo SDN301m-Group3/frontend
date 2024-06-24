@@ -50,7 +50,7 @@ export default function PhotoPage({ params }: { params: { id: string } }) {
                         <Image
                             className="object-cover rounded-lg"
                             src={photo.url}
-                            alt={photo.title}
+                            alt={photo.title || 'Photo'}
                             width={1000}
                             height={1000}
                         />
@@ -68,7 +68,7 @@ export default function PhotoPage({ params }: { params: { id: string } }) {
                                 src={
                                     photo?.owner?.img || '/avatar/noavatar.png'
                                 }
-                                alt="picture"
+                                alt={photo?.title || 'Photo'}
                             />
                             <AvatarFallback>{'A'}</AvatarFallback>
                         </Avatar>
