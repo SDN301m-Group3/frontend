@@ -15,8 +15,10 @@ import { GroupInfo } from '@/lib/define';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { useSocket } from '@/components/socket-io-provider';
 
 export default function RemoveGroupDialog({ group }: { group: GroupInfo }) {
+    const { socket } = useSocket();
     const router = useRouter();
     const [checkbox, setCheckbox] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +35,11 @@ export default function RemoveGroupDialog({ group }: { group: GroupInfo }) {
         const result = await removeGroup(group._id);
         if (!result?.isSuccess) {
             setResult(result);
+            toast.error(result?.error);
         } else {
+            if (socket) {
+                socket.emit('sendNotification', result?.data);
+            }
             toast.success('Group deleted successfully');
             setResult({ isSuccess: true });
             router.push('/');
