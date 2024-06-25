@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { useSocket } from '@/components/socket-io-provider';
+import { Icons } from '@/components/icons/icons';
 
 export default function RemoveGroupDialog({ group }: { group: GroupInfo }) {
     const { socket } = useSocket();
@@ -85,10 +86,13 @@ export default function RemoveGroupDialog({ group }: { group: GroupInfo }) {
                     <DialogFooter>
                         <Button
                             type="submit"
-                            disabled={!checkbox}
+                            disabled={!checkbox || isLoading}
                             onClick={handleDeleteGroup}
                             variant="destructive"
                         >
+                            {isLoading && (
+                                <Icons.spinner className=" mr-2 h-4 w-4 animate-spin" />
+                            )}
                             Delete
                         </Button>
                     </DialogFooter>
