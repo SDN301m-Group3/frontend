@@ -55,6 +55,7 @@ export type Group = {
         email: string;
     };
     description: string;
+    groupImg: string;
     numberOfAlbums: number;
     numberOfMembers: number;
 };
