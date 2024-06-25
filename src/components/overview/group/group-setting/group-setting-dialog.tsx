@@ -9,6 +9,7 @@ import { getUser } from '@/lib/action';
 import GroupMembers from './group-memebers';
 import GroupAlbums from './group-albums';
 import { cn } from '@/lib/utils';
+import GroupSetting from './group-setting';
 
 export default async function GroupSettingDialog({
     group,
@@ -51,7 +52,9 @@ export default async function GroupSettingDialog({
                     <TabsContent value="albums">
                         <GroupAlbums group={group} />
                     </TabsContent>
-                    <TabsContent value="Setting">Setting</TabsContent>
+                    <TabsContent value="Setting">
+                        <GroupSetting group={group} user={user} />
+                    </TabsContent>
                 </Tabs>
             </DialogContent>
         </Dialog>

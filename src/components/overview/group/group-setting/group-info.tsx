@@ -1,3 +1,4 @@
+'use client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
     Card,
@@ -7,9 +8,9 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { getUser } from '@/lib/action';
 import { GroupInfo, User } from '@/lib/define';
 import { getDateFormatted } from '@/lib/utils';
+import OutGroupDialog from './out-group-dialog';
 
 export default function GroupInformation({
     group,
@@ -64,6 +65,9 @@ export default function GroupInformation({
                     </div>
                 </div>
             </CardContent>
+            <CardFooter className="flex justify-between">
+                <OutGroupDialog />
+            </CardFooter>
         </Card>
     );
 }
