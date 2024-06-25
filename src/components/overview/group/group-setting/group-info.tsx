@@ -1,6 +1,5 @@
 'use client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import {
     Card,
     CardContent,
@@ -9,20 +8,9 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog';
-import { getUser } from '@/lib/action';
 import { GroupInfo, User } from '@/lib/define';
 import { getDateFormatted } from '@/lib/utils';
-import { useState } from 'react';
+import OutGroupDialog from './out-group-dialog';
 
 export default function GroupInformation({
     group,
@@ -31,12 +19,6 @@ export default function GroupInformation({
     group: GroupInfo;
     user: User;
 }) {
-    const [checkbox, setCheckbox] = useState(false);
-
-    const handleCheckboxChange = (event: any) => {
-        setCheckbox(!checkbox);
-    };
-
     return (
         <Card>
             <CardHeader>
@@ -84,41 +66,7 @@ export default function GroupInformation({
                 </div>
             </CardContent>
             <CardFooter className="flex justify-between">
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Button variant="destructive">Out group</Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                            <DialogTitle>Out group</DialogTitle>
-                            <DialogDescription>
-                                Want to get out of the group?
-                            </DialogDescription>
-                        </DialogHeader>
-                        <div className="items-top flex space-x-2">
-                            <Checkbox
-                                id="terms1"
-                                onCheckedChange={handleCheckboxChange}
-                            />
-                            <div className="grid gap-1.5 leading-none">
-                                <label
-                                    htmlFor="terms1"
-                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                >
-                                    Are you sure ?
-                                </label>
-                                <p className="text-sm text-muted-foreground">
-                                    You may lose all of these memories
-                                </p>
-                            </div>
-                        </div>
-                        <DialogFooter>
-                            <Button type="submit" disabled={!checkbox}>
-                                Get out
-                            </Button>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
+                <OutGroupDialog />
             </CardFooter>
         </Card>
     );

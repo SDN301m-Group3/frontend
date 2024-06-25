@@ -451,7 +451,7 @@ export const markNotificationAsSeen = async (notificationId: string) => {
 
 export const removeGroup = async (groupId: string) => {
     const response = await axios
-        .put(`groups/${groupId}/remove`, {
+        .put(`groups/${groupId}/remove`, undefined, {
             headers: await getAuthHeader(),
         })
         .then((res) => {
@@ -466,6 +466,5 @@ export const removeGroup = async (groupId: string) => {
                 error: error.response.data.error.message || 'Unknown error',
             };
         });
-
     return response;
 };
