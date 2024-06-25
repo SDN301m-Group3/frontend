@@ -210,4 +210,5 @@ export type UserNotification = {
     seen: boolean;
     redirectUrl: string;
     createdAt: string;
+    groupIs?: string;
 };
