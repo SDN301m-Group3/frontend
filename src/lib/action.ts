@@ -404,14 +404,12 @@ export const acceptInviteToGroup = async (
             params: { inviteToken },
         })
         .then((res) => {
-            console.log('accept invite', res.data);
             return {
                 isSuccess: true,
                 error: '',
             };
         })
         .catch((error) => {
-            console.log('accept invite error', error.response.data);
             return {
                 isSuccess: false,
                 error: error.response.data.error.message || 'Unknown error',
@@ -432,20 +430,17 @@ export const getUserNotifications = async () => {
 };
 
 export const markNotificationAsSeen = async (notificationId: string) => {
-    console.log('mark as seen', notificationId);
     const response = await axios
         .put(`/notifications/${notificationId}/mark-as-seen`, undefined, {
             headers: await getAuthHeader(),
         })
         .then((res) => {
-            console.log('mark as seen', res.data);
             return {
                 isSuccess: true,
                 error: '',
             };
         })
         .catch((error) => {
-            console.log('mark as seen error', error.response.data);
             return {
                 isSuccess: false,
                 error: error.response.data.error.message || 'Unknown error',

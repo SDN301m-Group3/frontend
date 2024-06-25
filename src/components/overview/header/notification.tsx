@@ -20,6 +20,7 @@ import { cn, getFormatDistanceToNow } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 export default function Notification({ user }: { user: User }) {
     const router = useRouter();
@@ -30,9 +31,22 @@ export default function Notification({ user }: { user: User }) {
         if (socket) {
             socket.on('getNotification', (data: UserNotification) => {
                 setNotification((prevNotifications) => [
-                    ...prevNotifications,
                     data,
+                    ...prevNotifications,
                 ]);
+                toast(
+                    `You have new notification from ${data.user.fullName} (${data.user.username})`,
+                    {
+                        description: data.content,
+                        action: {
+                            label: 'See more',
+                            onClick: () => {
+                                handleSeenNoti(data);
+                                router.push(data.redirectUrl);
+                            },
+                        },
+                    }
+                );
             });
         }
 
@@ -53,7 +67,6 @@ export default function Notification({ user }: { user: User }) {
     }, []);
 
     const handleSeenNoti = async (noti: UserNotification) => {
-        console.log('seen noti', noti);
         if (noti.seen) return;
         setNotification((prevNotifications) =>
             prevNotifications.map((notificationItem) => {

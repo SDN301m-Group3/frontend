@@ -100,7 +100,7 @@ export default async function AlbumPage({
                                 <Button>Open Gallery</Button>
                             </div>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-[1000px] p-0 bg-transparent border-none">
+                        <DialogContent className="sm:max-w-[1000px] p-0 bg-transparent border-none shadow-none">
                             <Suspense
                                 key={
                                     searchParams.page ||
