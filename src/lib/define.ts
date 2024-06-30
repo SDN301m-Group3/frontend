@@ -183,6 +183,12 @@ export type SearchPhotoParams = {
     mode?: string;
 };
 
+export type SearchPhotoCommentParams = {
+    page?: number;
+    pageSize?: number;
+    sort?: string;
+};
+
 export type SearchAlbumParams = {
     search?: string;
 };
@@ -211,4 +217,63 @@ export type UserNotification = {
     redirectUrl: string;
     createdAt: string;
     groupIs?: string;
+};
+
+export type PhotoDetail = {
+    _id: string;
+    title: string;
+    tags: string[];
+    url: string;
+    createdAt: string;
+    owner: {
+        _id: string;
+        fullName: string;
+        username: string;
+        email: string;
+        img: string;
+    };
+    group: {
+        _id: string;
+        title: string;
+    };
+    album: {
+        _id: string;
+        title: string;
+    };
+    reacts: [
+        {
+            id: string;
+            createdAt: string;
+            owner: {
+                id: string;
+                fullName: string;
+                username: string;
+                email: string;
+            };
+        },
+    ];
+};
+
+export type PhotoReact = {
+    _id: string;
+    createdAt: string;
+    owner: {
+        id: string;
+        fullName: string;
+        username: string;
+        email: string;
+    };
+};
+
+export type PhotoComment = {
+    _id: string;
+    content: string;
+    createdAt: string;
+    user: {
+        _id: string;
+        fullName: string;
+        username: string;
+        email: string;
+        img: string;
+    };
 };
