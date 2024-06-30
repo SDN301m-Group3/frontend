@@ -95,3 +95,14 @@ export const uploadPhotoSchema = z.object({
             message: 'Tag must be unique',
         }),
 });
+
+export const photoCommentSchema = z.object({
+    content: z
+        .string()
+        .refine((val) => val.replace(/<[^>]+>/g, '').trim().length >= 1, {
+            message: 'Comment can not empty',
+        })
+        .refine((val) => val.replace(/<[^>]+>/g, '').trim().length <= 1000, {
+            message: 'Comment must be less than 1000 characters',
+        }),
+});

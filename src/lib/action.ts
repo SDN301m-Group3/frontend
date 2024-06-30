@@ -471,3 +471,32 @@ export const removeGroup = async (groupId: string) => {
         });
     return response;
 };
+
+export const commentOnPhoto = async (photoId: string, comment: string) => {
+    const response = await axios
+        .post(
+            `/photos/${photoId}/comment`,
+            {
+                content: comment,
+            },
+            {
+                headers: await getAuthHeader(),
+            }
+        )
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+                data: res.data as any,
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error.response.data.error.message || 'Unknown error',
+                data: null,
+            };
+        });
+
+    return response;
+};
