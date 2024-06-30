@@ -1,13 +1,16 @@
 import ButtonShare from '@/components/shared/button-share';
 import { Separator } from '@/components/ui/separator';
-import { PhotoDetail } from '@/lib/define';
+import { PhotoDetail, User } from '@/lib/define';
 import { Heart, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 import PhotoLikeAction from './photo-like-action';
 import { getPhotoReacts } from '@/lib/data';
+import CommentAction from './comment-action';
+import { getUser } from '@/lib/action';
 
 export default async function PhotoAction({ photo }: { photo: PhotoDetail }) {
     const reacts = await getPhotoReacts(photo._id);
+    const user = (await getUser()) as User;
 
     return (
         <div>
@@ -24,13 +27,7 @@ export default async function PhotoAction({ photo }: { photo: PhotoDetail }) {
             <Separator className="mb-2 mt-2" />
             <div className="flex justify-between md:px-10 text-sky-500">
                 <PhotoLikeAction isLiked={true} />
-                <Link
-                    href="#post-comment"
-                    className="flex gap-2 items-center hover:text-sky-600 hover:dark:bg-gray-700 hover:bg-sky-100 p-2 px-5 rounded-md"
-                    // onClick={e => handleClick(e)}
-                >
-                    <MessageCircle />
-                </Link>
+                <CommentAction user={user} photo={photo} />
                 <ButtonShare />
             </div>
             <Separator className="my-2" />

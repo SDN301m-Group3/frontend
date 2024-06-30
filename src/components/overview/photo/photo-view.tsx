@@ -7,7 +7,7 @@ export default function PhotoView({ photo }: { photo: PhotoDetail }) {
     return (
         <Dialog>
             <DialogTrigger asChild className="cursor-pointer">
-                <div className="w-full max-h-[85vh] lg:h-[85vh] flex justify-center ">
+                <div className="w-full h-[85vh] lg:h-[85vh] flex justify-center ">
                     <Image
                         className="object-contain h-full rounded-lg"
                         src={photo.url}

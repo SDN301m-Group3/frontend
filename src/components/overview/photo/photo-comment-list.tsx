@@ -14,7 +14,6 @@ export default async function PhotoCommentList({
         photo._id,
         searchParams
     );
-    console.log(comments);
 
     return (
         <div>
