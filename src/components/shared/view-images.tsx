@@ -10,12 +10,12 @@ import Image from 'next/image';
 const ViewImages = ({ images }: { images: string[] }) => {
     return (
         <Carousel className="w-full">
-            <CarouselContent>
+            <CarouselContent className="">
                 {images.map((image, index) => (
                     <CarouselItem key={index}>
-                        <div>
+                        <div className="w-full h-[95vh] flex justify-center shadow-none">
                             <Image
-                                className="object-cover rounded-lg h-full"
+                                className="object-contain rounded-lg h-full"
                                 src={image}
                                 alt={`Photo ${index}`}
                                 width={1000}

@@ -10,8 +10,7 @@ import SpinLoading from '@/components/shared/spin-loading';
 import { BasicTooltip } from '@/components/shared/tool-tip';
 import { Button } from '@/components/ui/button';
 import { getGroupInfo } from '@/lib/data';
-import { BreadItem, GroupInfo, SearchAlbumParams } from '@/lib/define';
-import { Settings } from 'lucide-react';
+import { BreadItem, SearchAlbumParams } from '@/lib/define';
 import { Suspense } from 'react';
 
 export default async function GroupPage({

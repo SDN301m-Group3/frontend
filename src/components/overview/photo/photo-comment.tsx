@@ -1,14 +1,14 @@
 import CommentText from '@/components/shared/comment-text';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { PhotoComment } from '@/lib/define';
 import { getFormatDistanceToNow } from '@/lib/utils';
-import { HeartIcon } from '@radix-ui/react-icons';
 
-export default async function PhotoComment({ comment }: { comment: any }) {
-    // const isLiked = await isLikedComment(comment.id);
-
+export default async function PhotoCommentItem({
+    comment,
+}: {
+    comment: PhotoComment;
+}) {
     return (
         <div>
             <div className="flex items-start gap-2 md:gap-5 my-5">

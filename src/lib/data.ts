@@ -9,7 +9,11 @@ import {
     GroupMember,
     PageMeta,
     Photo,
+    PhotoComment,
+    PhotoDetail,
+    PhotoReact,
     SearchAlbumParams,
+    SearchPhotoCommentParams,
     SearchPhotoParams,
     SearchUser,
 } from './define';
@@ -135,4 +139,59 @@ export const getPhotosByAlbumId = async (
             pageMeta: pageMetaDefault as PageMeta,
         };
     }
+};
+
+export const getPhotoDetail = async (photoId: string) => {
+    const response = await axios
+        .get(`/photos/${photoId}`, {
+            headers: await getAuthHeader(),
+        })
+        .then((res) => {
+            return res.data as PhotoDetail;
+        })
+        .catch((error) => {
+            return {} as PhotoDetail;
+        });
+
+    return response;
+};
+
+export const getPhotoComments = async (
+    photoId: string,
+    searchParams: SearchPhotoCommentParams
+) => {
+    const { comments, pageMeta } = await axios
+        .get(`/photos/${photoId}/comments`, {
+            headers: await getAuthHeader(),
+            params: searchParams,
+        })
+        .then((res) => {
+            return {
+                comments: res.data.comments as PhotoComment[],
+                pageMeta: res.data.pageMeta as PageMeta,
+            };
+        })
+        .catch((error) => {
+            return {
+                comments: [] as PhotoComment[],
+                pageMeta: pageMetaDefault as PageMeta,
+            };
+        });
+
+    return { comments, pageMeta };
+};
+
+export const getPhotoReacts = async (photoId: string) => {
+    const response = await axios
+        .get(`/photos/${photoId}/reacts`, {
+            headers: await getAuthHeader(),
+        })
+        .then((res) => {
+            return res.data as PhotoReact[];
+        })
+        .catch((error) => {
+            return [] as PhotoReact[];
+        });
+
+    return response;
 };
