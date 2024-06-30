@@ -17,6 +17,7 @@ import {
     User,
     UserNotification,
 } from './define';
+import { error } from 'console';
 // import cookie from '@boiseitguru/cookie-cutter';
 
 axios.defaults.baseURL = process.env.API_URL;
@@ -469,5 +470,28 @@ export const removeGroup = async (groupId: string) => {
                 data: null,
             };
         });
+    return response;
+};
+
+export const kickGroupMember = async (groupId: string, memberId: string) => {
+    const response = await axios
+        .put(`groups/${groupId}/remove-user/${memberId}`, undefined, {
+            headers: await getAuthHeader(),
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+                data: res.data as UserNotification,
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error.response.data.error.message || 'Unknown error',
+                data: null,
+            };
+        });
+    console.log('response' + response);
     return response;
 };
