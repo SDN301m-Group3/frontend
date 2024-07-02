@@ -17,6 +17,7 @@ import {
     User,
     UserNotification,
 } from './define';
+import { getImageSize } from 'react-image-size';
 // import cookie from '@boiseitguru/cookie-cutter';
 
 axios.defaults.baseURL = process.env.API_URL;

@@ -49,7 +49,7 @@ export default async function PhotoPage({
             <div className="mb-2">
                 <BreadcrumbComponent breadcrumbs={breadItems} />
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-5">
                 <div className="col-span-2 lg:col-span-2">
                     <PhotoView photo={photo} />
                 </div>

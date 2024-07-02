@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { format, formatDistanceToNow, isThisYear } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import { ReadonlyURLSearchParams } from 'next/navigation';
+import { getImageSize } from 'react-image-size';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -30,3 +31,21 @@ export const getFormatDistanceToNow = (params: string) => {
         addSuffix: true,
     });
 }; // dung cai nay
+
+export const fetchImageSize = async (url: string) => {
+    const dimensions = await getImageSize(url)
+        .then((size) => {
+            return {
+                width: size.width,
+                height: size.height,
+            };
+        })
+        .catch((error) => {
+            console.log(error);
+            return {
+                width: 0,
+                height: 0,
+            };
+        });
+    return dimensions;
+};
