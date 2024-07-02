@@ -501,3 +501,25 @@ export const commentOnPhoto = async (photoId: string, comment: string) => {
 
     return response;
 };
+
+export const kickGroupMember = async (groupId: string, memberId: string) => {
+    const response = await axios
+        .put(`groups/${groupId}/remove-user/${memberId}`, undefined, {
+            headers: await getAuthHeader(),
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+                data: res.data as UserNotification,
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error.response.data.error.message || 'Unknown error',
+                data: null,
+            };
+        });
+    return response;
+};
