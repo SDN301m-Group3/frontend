@@ -104,7 +104,7 @@ export default function Notification({ user }: { user: User }) {
             <DropdownMenuContent className="w-[25rem]">
                 <DropdownMenuLabel>My Notification</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <ScrollArea className="h-72 rounded-md border p-2">
+                <ScrollArea className="h-72 rounded-md p-2 pl-0">
                     {notification.length === 0 && (
                         <div className="flex items-center justify-center h-72">
                             No notification
@@ -117,8 +117,8 @@ export default function Notification({ user }: { user: User }) {
                             onClick={() => handleSeenNoti(noti)}
                         >
                             <DropdownMenuGroup>
-                                <DropdownMenuItem>
-                                    <div className="flex justify-start items-center gap-1">
+                                <DropdownMenuItem className="pl-0">
+                                    <div className="flex justify-start items-center">
                                         <Dot
                                             size={30}
                                             className={cn(
