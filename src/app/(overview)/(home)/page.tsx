@@ -1,5 +1,3 @@
-import BtnSendNotiDemo from '@/components/overview/home/btn-send-noti-demo';
-import { GroupItem } from '@/components/overview/home/group/group-item';
 import GroupList from '@/components/overview/home/group/group-list';
 import LandingPage from '@/components/overview/home/landing-page/landing-page';
 import { RecentViewList } from '@/components/overview/home/recent-view/recent-view-list';

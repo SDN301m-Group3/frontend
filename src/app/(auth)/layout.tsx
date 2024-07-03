@@ -9,10 +9,10 @@ import SwitchPage from '@/components/auth/switch-page';
 
 export const metadata: Metadata = {
     title: {
-        default: `Xác thực | ${siteConfig.name}`,
+        default: `Authentication | ${siteConfig.name}`,
         template: `%s | ${siteConfig.name}`,
     },
-    description: 'Thực hiện xác thực người dùng tại đây',
+    description: 'Authen page for user login and register.',
 };
 
 export default function AuthLayout({

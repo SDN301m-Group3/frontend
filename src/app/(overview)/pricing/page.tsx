@@ -108,15 +108,15 @@ const PricingCard = ({
                         {yearlyPrice && isYearly
                             ? '$' + yearlyPrice
                             : monthlyPrice
-                            ? '$' + monthlyPrice
-                            : 'Custom'}
+                              ? '$' + monthlyPrice
+                              : 'Custom'}
                     </h3>
                     <span className="flex flex-col justify-end text-sm mb-1">
                         {yearlyPrice && isYearly
                             ? '/year'
                             : monthlyPrice
-                            ? '/month'
-                            : null}
+                              ? '/month'
+                              : null}
                     </span>
                 </div>
                 <CardDescription className="pt-1.5 h-12">
@@ -201,7 +201,7 @@ export default function page() {
             />
             <PricingSwitch onSwitch={togglePricingPeriod} />
             <section className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-8 mt-8">
-                {plans.map(plan => {
+                {plans.map((plan) => {
                     return (
                         <PricingCard
                             key={plan.title}

@@ -11,7 +11,25 @@ import { BasicTooltip } from '@/components/shared/tool-tip';
 import { Button } from '@/components/ui/button';
 import { getGroupInfo } from '@/lib/data';
 import { BreadItem, SearchAlbumParams } from '@/lib/define';
+import { Metadata } from 'next';
 import { Suspense } from 'react';
+
+type Props = {
+    params: { id: string };
+    searchParams: SearchAlbumParams;
+};
+
+export async function generateMetadata({
+    params,
+    searchParams,
+}: Props): Promise<Metadata> {
+    const group = await getGroupInfo(params.id);
+
+    return {
+        title: `Group: ${group.title}`,
+        description: `Group: ${group.title} - ${group.description}`,
+    };
+}
 
 export default async function GroupPage({
     params,

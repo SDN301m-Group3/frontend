@@ -12,9 +12,27 @@ import SpinLoading from '@/components/shared/spin-loading';
 import { BasicTooltip } from '@/components/shared/tool-tip';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { getAlbumInfo, getPhotosByAlbumId } from '@/lib/data';
+import { getAlbumInfo } from '@/lib/data';
 import { BreadItem, SearchPhotoParams, SortOption } from '@/lib/define';
+import { Metadata } from 'next';
 import { Suspense } from 'react';
+
+type Props = {
+    params: { id: string };
+    searchParams: SearchPhotoParams;
+};
+
+export async function generateMetadata({
+    params,
+    searchParams,
+}: Props): Promise<Metadata> {
+    const album = await getAlbumInfo(params.id);
+
+    return {
+        title: `Album: ${album.title}`,
+        description: `Album: ${album.title} - ${album.description}`,
+    };
+}
 
 const selectOptions = [
     {

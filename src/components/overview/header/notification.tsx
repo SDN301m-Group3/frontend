@@ -30,6 +30,7 @@ export default function Notification({ user }: { user: User }) {
     useEffect(() => {
         if (socket) {
             socket.on('getNotification', (data: UserNotification) => {
+                console.log('getNotification', data);
                 setNotification((prevNotifications) => [
                     data,
                     ...prevNotifications,

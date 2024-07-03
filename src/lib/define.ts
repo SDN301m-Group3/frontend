@@ -216,7 +216,8 @@ export type UserNotification = {
     seen: string[];
     redirectUrl: string;
     createdAt: string;
-    groupIs?: string;
+    groupId?: string;
+    albumId?: string;
 };
 
 export type PhotoDetail = {
