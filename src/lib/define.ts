@@ -278,3 +278,29 @@ export type PhotoComment = {
         img: string;
     };
 };
+
+export type RecentPhoto = {
+    _id: string;
+    actionType: string;
+    photo: {
+        _id: string;
+        album: {
+            _id: string;
+            group: {
+                _id: string;
+                title: string;
+            };
+            title: string;
+        };
+        owner: {
+            _id: string;
+            username: string;
+            email: string;
+            fullName: string;
+            img: string;
+        };
+        url: string;
+    };
+    createdAt: string;
+    updatedAt: string;
+};
