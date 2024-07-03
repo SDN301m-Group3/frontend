@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell } from 'lucide-react';
+import { Bell, Dot } from 'lucide-react';
 
 import {
     DropdownMenu,
@@ -100,7 +100,7 @@ export default function Notification({ user }: { user: User }) {
                     </div>
                 </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-80">
+            <DropdownMenuContent className="w-[25rem]">
                 <DropdownMenuLabel>My Notification</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <ScrollArea className="h-72 rounded-md border p-2">
@@ -117,45 +117,55 @@ export default function Notification({ user }: { user: User }) {
                         >
                             <DropdownMenuGroup>
                                 <DropdownMenuItem>
-                                    <div
-                                        className={cn(
-                                            'flex flex-col',
-                                            noti.seen.includes(user.aud) &&
-                                                'text-slate-600'
-                                        )}
-                                    >
-                                        <div className="flex gap-2">
-                                            <Avatar className="border-solid border-sky-500 border-2 w-[40px] h-[40px]">
-                                                <AvatarImage
-                                                    src={
-                                                        noti?.user?.img ||
-                                                        '/avatar/noavatar.png'
-                                                    }
-                                                    alt="picture"
-                                                />
-                                                <AvatarFallback>
-                                                    {'A'}
-                                                </AvatarFallback>
-                                            </Avatar>
-                                            <div className="flex flex-col justify-around">
-                                                <p className="text-sm font-medium leading-none">
-                                                    {noti?.user?.fullName} (
-                                                    {noti?.user?.username})
-                                                </p>
-                                                <p className="text-xs leading-none ">
-                                                    {noti?.user?.email}
-                                                </p>
+                                    <div className="flex justify-start items-center gap-1">
+                                        <Dot
+                                            size={30}
+                                            className={cn(
+                                                !noti.seen.includes(user.aud)
+                                                    ? 'text-primary'
+                                                    : 'text-background'
+                                            )}
+                                        />
+                                        <div
+                                            className={cn(
+                                                'flex flex-col',
+                                                noti.seen.includes(user.aud) &&
+                                                    'text-slate-600'
+                                            )}
+                                        >
+                                            <div className="flex gap-2">
+                                                <Avatar className="border-solid border-sky-500 border-2 w-[40px] h-[40px]">
+                                                    <AvatarImage
+                                                        src={
+                                                            noti?.user?.img ||
+                                                            '/avatar/noavatar.png'
+                                                        }
+                                                        alt="picture"
+                                                    />
+                                                    <AvatarFallback>
+                                                        {'A'}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                                <div className="flex flex-col justify-around">
+                                                    <p className="text-sm font-medium leading-none">
+                                                        {noti?.user?.fullName} (
+                                                        {noti?.user?.username})
+                                                    </p>
+                                                    <p className="text-xs leading-none ">
+                                                        {noti?.user?.email}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <span className="mt-2">
-                                            {noti.content || 'No content'}
-                                        </span>
-                                        {/*getFormatDistanceToNow*/}
-                                        <div className="text-xs text-slate-400 mt-2">
-                                            {noti.createdAt &&
-                                                getFormatDistanceToNow(
-                                                    noti.createdAt
-                                                )}
+                                            <span className="mt-2">
+                                                {noti.content || 'No content'}
+                                            </span>
+                                            {/*getFormatDistanceToNow*/}
+                                            <div className="text-xs text-slate-400 mt-2">
+                                                {noti.createdAt &&
+                                                    getFormatDistanceToNow(
+                                                        noti.createdAt
+                                                    )}
+                                            </div>
                                         </div>
                                     </div>
                                 </DropdownMenuItem>
