@@ -67,14 +67,13 @@ export default function Notification({ user }: { user: User }) {
     }, []);
 
     const handleSeenNoti = async (noti: UserNotification) => {
-        if (noti.seen) return;
         setNotification((prevNotifications) =>
             prevNotifications.map((notificationItem) => {
                 if (notificationItem._id === noti._id) {
-                    return {
-                        ...notificationItem,
-                        seen: true,
-                    };
+                    if (notificationItem.seen.includes(user.aud))
+                        return notificationItem;
+                    notificationItem.seen.push(user.aud);
+                    return notificationItem;
                 }
                 return notificationItem;
             })
@@ -90,11 +89,13 @@ export default function Notification({ user }: { user: User }) {
                             <Bell size={24} />
                         </button>
                         <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">
-                            {notification.filter((noti) => !noti.seen).length >
-                            9
+                            {notification.filter(
+                                (noti) => !noti.seen.includes(user.aud)
+                            ).length > 9
                                 ? '9+'
-                                : notification.filter((noti) => !noti.seen)
-                                      .length}
+                                : notification.filter(
+                                      (noti) => !noti.seen.includes(user.aud)
+                                  ).length}
                         </span>
                     </div>
                 </div>
@@ -119,7 +120,8 @@ export default function Notification({ user }: { user: User }) {
                                     <div
                                         className={cn(
                                             'flex flex-col',
-                                            noti.seen && 'text-slate-600'
+                                            noti.seen.includes(user.aud) &&
+                                                'text-slate-600'
                                         )}
                                     >
                                         <div className="flex gap-2">

@@ -213,7 +213,7 @@ export type UserNotification = {
     type: string;
     receivers: string;
     content: string;
-    seen: boolean;
+    seen: string[];
     redirectUrl: string;
     createdAt: string;
     groupIs?: string;
