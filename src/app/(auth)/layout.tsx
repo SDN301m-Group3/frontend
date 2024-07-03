@@ -38,9 +38,10 @@ export default function AuthLayout({
                 <div className="relative z-20 mt-auto">
                     <blockquote className="space-y-2 text-primary">
                         <p className="text-lg">
-                            &ldquo;dasdas dasda dasd asd asdasd asdasdsd&rdquo;
+                            &ldquo;Your moments, our memories-share your
+                            snapshots with the world.&rdquo;
                         </p>
-                        <footer className="text-sm">Oscar Wilde</footer>
+                        <footer className="text-sm">Chat GPT</footer>
                     </blockquote>
                 </div>
             </div>
