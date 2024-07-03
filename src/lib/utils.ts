@@ -26,11 +26,12 @@ export const createUrl = (
 };
 
 export const getFormatDistanceToNow = (params: string) => {
+    if (!params) return;
     const date = new Date(params);
     return formatDistanceToNow(date, {
         addSuffix: true,
     });
-}; // dung cai nay
+};
 
 export const fetchImageSize = async (url: string) => {
     const dimensions = await getImageSize(url)
