@@ -26,7 +26,7 @@ export const createUrl = (
 };
 
 export const getFormatDistanceToNow = (params: string) => {
-    if (!params) return;
+    if (!params) return '';
     const date = new Date(params);
     return formatDistanceToNow(date, {
         addSuffix: true,
