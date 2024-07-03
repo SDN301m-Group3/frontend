@@ -3,7 +3,13 @@ import GroupList from '@/components/overview/home/group/group-list';
 import BreadcrumbComponent from '@/components/shared/breadcrumb-component';
 import SpinLoading from '@/components/shared/spin-loading';
 import { BreadItem } from '@/lib/define';
+import { Metadata } from 'next';
 import { Suspense } from 'react';
+
+export const metadata: Metadata = {
+    title: 'Group',
+    description: 'Group page',
+};
 
 export default function GroupPage() {
     const breadItems = [

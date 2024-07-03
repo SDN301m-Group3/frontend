@@ -6,10 +6,10 @@ import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
     title: {
-        default: `Trang chủ | ${siteConfig.name}`,
+        default: `Homepage | ${siteConfig.name}`,
         template: `%s | ${siteConfig.name}`,
     },
-    description: 'Trang chủ của website',
+    description: `Welcome to our site ${siteConfig.name}!`,
 };
 
 export default function HomeLayout({
