@@ -46,12 +46,12 @@ export default async function AlbumPage({
             url: '/group',
         },
         {
-            title: album.group.title,
-            url: `/group/${album.group._id}`,
+            title: album?.group?.title || 'Unknown',
+            url: `/group/${album?.group?._id}`,
         },
         {
-            title: album.title,
-            url: `/album/${album._id}`,
+            title: album?.title,
+            url: `/album/${album?._id}`,
         },
     ] as BreadItem[];
 
@@ -72,6 +72,7 @@ export default async function AlbumPage({
                         <BasicTooltip title={`Album: ${album.title}`} />
                     </h1>
                     <div className="flex justify-between">
+                        {/* <PhotoUploadDialog albumId={id} /> */}
                         <PhotoUploadDialog albumId={id} />
                         <AlbumSettingDialog album={album} />
                     </div>

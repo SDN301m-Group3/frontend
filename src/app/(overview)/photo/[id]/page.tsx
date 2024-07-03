@@ -39,7 +39,7 @@ export default async function PhotoPage({
             url: `/album/${photo?.album?._id}`,
         },
         {
-            title: photo?.title,
+            title: photo?.title || 'Photo',
             url: `/photo/${photo?._id}`,
         },
     ] as BreadItem[];

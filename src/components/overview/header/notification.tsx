@@ -126,7 +126,7 @@ export default function Notification({ user }: { user: User }) {
                                             <Avatar className="border-solid border-sky-500 border-2 w-[40px] h-[40px]">
                                                 <AvatarImage
                                                     src={
-                                                        user?.img ||
+                                                        noti?.user?.img ||
                                                         '/avatar/noavatar.png'
                                                     }
                                                     alt="picture"
@@ -137,11 +137,11 @@ export default function Notification({ user }: { user: User }) {
                                             </Avatar>
                                             <div className="flex flex-col justify-around">
                                                 <p className="text-sm font-medium leading-none">
-                                                    {user?.fullName} (
-                                                    {user?.username})
+                                                    {noti?.user?.fullName} (
+                                                    {noti?.user?.username})
                                                 </p>
                                                 <p className="text-xs leading-none ">
-                                                    {user?.email}
+                                                    {noti?.user?.email}
                                                 </p>
                                             </div>
                                         </div>

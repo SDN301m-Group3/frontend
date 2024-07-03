@@ -36,7 +36,7 @@ export default function PhotoView({ photo }: { photo: PhotoDetail }) {
                     <Image
                         className="object-contain h-full rounded-lg"
                         src={photo.url}
-                        alt={photo.title || 'Photo'}
+                        alt={photo?.title || 'Photo'}
                         width={dimensions.width}
                         height={dimensions.height}
                         priority={true}
