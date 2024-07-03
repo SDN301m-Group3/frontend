@@ -4,6 +4,8 @@
 
 @layer base {
     :root {
+        --auth-image: url('/auth/blue-sky.png');
+
         --background: 204 70% 98%;
         --foreground: 204 50% 0%;
         --muted: 204 29% 88%;
@@ -27,6 +29,8 @@
     }
 
     .dark {
+        --auth-image: url('/auth/dark-sky.png');
+
         --background: 204 50% 0%;
         --foreground: 204 25% 97%;
         --muted: 204 29% 12%;
