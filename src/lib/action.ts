@@ -8,7 +8,11 @@ import {
     registerFormSchema,
     joinGroupSchema,
 } from './form-schema';
-import axios, { AxiosError } from 'axios';
+import axios, {
+    AxiosError,
+    AxiosProgressEvent,
+    CancelTokenSource,
+} from 'axios';
 import { cookies } from 'next/headers';
 import {
     AuthResponse,
@@ -522,4 +526,38 @@ export const kickGroupMember = async (groupId: string, memberId: string) => {
             };
         });
     return response;
+};
+
+// export const uploadPhoto = async (
+//     formData: FormData,
+//     albumId: string,
+//     onUploadProgress?: (progressEvent: AxiosProgressEvent) => void,
+//     cancelSource?: CancelTokenSource
+// ) => {
+//     'use server';
+//     return await axios
+//         .post(`albums/${albumId}/upload-photo`, formData, {
+//             onUploadProgress,
+//             cancelToken: cancelSource?.token,
+//         })
+//         .then((res) => {
+//             return {
+//                 isSuccess: true,
+//                 error: '',
+//                 data: res.data as UserNotification,
+//             };
+//         });
+// };
+
+export const uploadPhotoToAws = async (
+    formData: FormData,
+    albumId: string,
+    onUploadProgress: (progressEvent: AxiosProgressEvent) => void,
+    cancelSource: CancelTokenSource
+) => {
+    return axios.post(`/albums/${albumId}/upload-photo`, formData, {
+        onUploadProgress,
+        cancelToken: cancelSource.token,
+        headers: await getAuthHeader(),
+    });
 };

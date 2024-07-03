@@ -9,8 +9,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import PhotoUploadForm from './photo-upload-form';
 import { useState } from 'react';
+import PhotoUploadForm from './photo-upload-form';
 
 export default function PhotoUploadDialog({ albumId }: { albumId: string }) {
     const [open, setOpen] = useState(false);
@@ -32,7 +32,7 @@ export default function PhotoUploadDialog({ albumId }: { albumId: string }) {
                     </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
-                    <PhotoUploadForm albumId={albumId} setOpen={setOpen} />
+                    <PhotoUploadForm albumId={albumId} />
                 </div>
             </DialogContent>
         </Dialog>
