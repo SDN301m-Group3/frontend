@@ -146,7 +146,7 @@ export default function PhotoUploadForm({ albumId }: { albumId: string }) {
     ) => {
         const result = await axios
             .post(
-                `http://localhost:9999/albums/${albumId}/upload-photo`,
+                `${process.env.NEXT_PUBLIC_API_URL}/albums/${albumId}/upload-photo`,
                 formData,
                 {
                     onUploadProgress,

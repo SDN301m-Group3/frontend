@@ -11,22 +11,27 @@ import { BreadItem, PhotoDetail, SearchPhotoCommentParams } from '@/lib/define';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 
-type Props = {
-    params: { id: string };
-    searchParams: SearchPhotoCommentParams;
+// type Props = {
+//     params: { id: string };
+//     searchParams: SearchPhotoCommentParams;
+// };
+
+// export async function generateMetadata({
+//     params,
+//     searchParams,
+// }: Props): Promise<Metadata> {
+//     const photo = (await getPhotoDetail(params.id)) as PhotoDetail;
+
+//     return {
+//         title: `Photo: ${photo?.title || 'No title'}`,
+//         description: `Photo: ${photo?.title || 'No title'} - upload by ${photo?.owner?.username}`,
+//     };
+// }
+
+export const metadata: Metadata = {
+    title: 'Photo',
+    description: 'Photo detail page',
 };
-
-export async function generateMetadata({
-    params,
-    searchParams,
-}: Props): Promise<Metadata> {
-    const photo = (await getPhotoDetail(params.id)) as PhotoDetail;
-
-    return {
-        title: `Photo: ${photo?.title || 'No title'}`,
-        description: `Photo: ${photo?.title || 'No title'} - upload by ${photo?.owner?.username}`,
-    };
-}
 
 export default async function PhotoPage({
     params,

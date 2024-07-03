@@ -12,6 +12,7 @@ import {
     PhotoComment,
     PhotoDetail,
     PhotoReact,
+    RecentPhoto,
     SearchAlbumParams,
     SearchPhotoCommentParams,
     SearchPhotoParams,
@@ -194,4 +195,18 @@ export const getPhotoReacts = async (photoId: string) => {
         });
 
     return response;
+};
+
+export const getRecentViewPhotos = async (limit: number) => {
+    try {
+        const response = await axios.get(`/photos/recent-view`, {
+            headers: await getAuthHeader(),
+            params: {
+                limit,
+            },
+        });
+        return response.data as RecentPhoto[];
+    } catch (error) {
+        return [] as RecentPhoto[];
+    }
 };
