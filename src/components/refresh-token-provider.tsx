@@ -16,20 +16,23 @@ export function RefreshTokenProvider({
 }) {
     const router = useRouter();
     useEffect(() => {
-        const interval = setInterval(async () => {
-            try {
-                const oldRefreshToken = getCookie('refresh-token');
-                if (oldRefreshToken !== '') {
-                    await refreshAccessToken(oldRefreshToken as string);
+        const interval = setInterval(
+            async () => {
+                try {
+                    const oldRefreshToken = getCookie('refresh-token');
+                    if (oldRefreshToken !== '') {
+                        await refreshAccessToken(oldRefreshToken as string);
+                    }
+                } catch (error) {
+                    console.log('update token failed');
+                    router.push('/logout');
                 }
-            } catch (error) {
-                console.log('update token failed');
-                router.push('/logout');
-            }
-        }, 1000 * 10); // 50 minutes
+            },
+            1000 * 50 * 10
+        ); // 50 minutes
 
         return () => clearInterval(interval);
-    }, []);
+    }, [router]);
 
     return <>{children}</>;
 }

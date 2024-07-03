@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import {
     Carousel,
     CarouselContent,
@@ -17,6 +17,18 @@ const Gallery = ({ photos }: { photos: Photo[] }) => {
     const [mainApi, setMainApi] = useState<CarouselApi>();
     const [thumbnailApi, setThumbnailApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
+
+    const handleClick = useCallback(
+        (index: number) => {
+            if (!mainApi || !thumbnailApi) {
+                return;
+            }
+            thumbnailApi.scrollTo(index);
+            mainApi.scrollTo(index);
+            setCurrent(index);
+        },
+        [mainApi, thumbnailApi, setCurrent]
+    );
 
     const mainImage = useMemo(
         () =>
@@ -57,7 +69,7 @@ const Gallery = ({ photos }: { photos: Photo[] }) => {
                     />
                 </CarouselItem>
             )),
-        [photos, current]
+        [photos, current, handleClick]
     );
 
     useEffect(() => {
@@ -85,15 +97,6 @@ const Gallery = ({ photos }: { photos: Photo[] }) => {
             thumbnailApi.off('select', handleBottomSelect);
         };
     }, [mainApi, thumbnailApi]);
-
-    const handleClick = (index: number) => {
-        if (!mainApi || !thumbnailApi) {
-            return;
-        }
-        thumbnailApi.scrollTo(index);
-        mainApi.scrollTo(index);
-        setCurrent(index);
-    };
 
     return (
         <div className="w-full">

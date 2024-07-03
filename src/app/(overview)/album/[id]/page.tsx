@@ -1,4 +1,5 @@
 import AlbumMembers from '@/components/overview/album/album-members';
+import AlbumNotFound from '@/components/overview/album/album-not-found';
 import AlbumSettingDialog from '@/components/overview/album/album-setting-dialog';
 import GalleryView from '@/components/overview/album/gallery-view';
 import PhotoList from '@/components/overview/album/photo-list';
@@ -57,6 +58,10 @@ export default async function AlbumPage({
     const { id } = params;
 
     const album = await getAlbumInfo(id);
+
+    if (!album?._id) {
+        return <AlbumNotFound />;
+    }
 
     const breadItems = [
         {

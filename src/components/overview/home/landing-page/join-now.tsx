@@ -26,7 +26,7 @@ export function JoinNow() {
     return (
         <div className="flex flex-col items-center justify-center my-10">
             <p className="text-neutral-600 dark:text-neutral-200 text-xs sm:text-base  ">
-                Join Us and Keep Your Group's Story Alive
+                Join Us and Keep Your Group&apos;s Story Alive
             </p>
             <TypewriterEffectSmooth words={words} />
             <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4">

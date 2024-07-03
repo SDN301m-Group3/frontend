@@ -1,10 +1,8 @@
-import AcceptInviteToGroup from '@/components/overview/group/invite/accept-invite';
-import { Metadata } from 'next';
+'use client';
 
-export const metadata: Metadata = {
-    title: 'Accept Invite to Group',
-    description: 'Accept Invite to Group',
-};
+import AcceptInviteToGroup from '@/components/overview/group/invite/accept-invite';
+import { Button } from '@/components/ui/button';
+import { useState } from 'react';
 
 export default function AcceptInviteToGroupPage({
     params,
@@ -13,10 +11,25 @@ export default function AcceptInviteToGroupPage({
     params: { id: string };
     searchParams: { inviteToken: string };
 }) {
+    const [showAcceptInvite, setShowAcceptInvite] = useState(false);
+
+    const handleAcceptInviteClick = () => {
+        setShowAcceptInvite(true);
+    };
+
     return (
-        <AcceptInviteToGroup
-            groupId={params.id}
-            inviteToken={searchParams.inviteToken}
-        />
+        <div className="text-center">
+            <h1>Accept Invite to Group</h1>
+            {showAcceptInvite ? (
+                <AcceptInviteToGroup
+                    groupId={params.id}
+                    inviteToken={searchParams.inviteToken}
+                />
+            ) : (
+                <Button onClick={handleAcceptInviteClick} className="my-2">
+                    Join Group
+                </Button>
+            )}
+        </div>
     );
 }
