@@ -12,8 +12,7 @@ export default function CommentText({ comment }: { comment: string }) {
         setIsShowMore(!isShowMore);
     };
 
-    // Set displayed text based on show more/show less state
-    const setDisplayText = () => {
+    React.useEffect(() => {
         if (isShowMore) {
             setDisplayedText(comment);
         } else {
@@ -23,10 +22,6 @@ export default function CommentText({ comment }: { comment: string }) {
                 setDisplayedText(comment.slice(0, 150) + '...');
             }
         }
-    };
-
-    React.useEffect(() => {
-        setDisplayText();
     }, [comment, isShowMore]);
 
     return (
