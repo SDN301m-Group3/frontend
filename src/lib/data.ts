@@ -177,8 +177,7 @@ export const getPhotoReacts = async (photoId: string) => {
 
 export const getRecentViewPhotos = async (limit: number) => {
     try {
-        const response = await axios.get(`/photos/recent-view`, {
-            headers: await getAuthHeader(),
+        const response = await http.get(`/photos/recent-view`, {
             params: {
                 limit,
             },
