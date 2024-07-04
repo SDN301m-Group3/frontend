@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { getAuthHeader } from './action';
 import {
     Album,
     AlbumInfo,
@@ -18,14 +17,13 @@ import {
     SearchPhotoParams,
     SearchUser,
 } from './define';
+import http from '@/config/axios';
 
 axios.defaults.baseURL = process.env.API_URL;
 
 export async function getMyGroups() {
-    return await axios
-        .get(`/groups/my-groups`, {
-            headers: await getAuthHeader(),
-        })
+    return await http
+        .get(`/groups/my-groups`)
         .then((res) => {
             return res.data as Group[];
         })
@@ -35,10 +33,8 @@ export async function getMyGroups() {
 }
 
 export async function getJoinedGroups() {
-    return await axios
-        .get(`/groups/all-groups`, {
-            headers: await getAuthHeader(),
-        })
+    return await http
+        .get(`/groups/all-groups`)
         .then((res) => {
             return res.data as Group[];
         })
@@ -52,8 +48,7 @@ export const getAlbumsByGroup = async (
     searchParams: SearchAlbumParams
 ) => {
     try {
-        const response = await axios.get(`/groups/${groupId}/albums`, {
-            headers: await getAuthHeader(),
+        const response = await http.get(`/groups/${groupId}/albums`, {
             params: searchParams,
         });
         return response.data as Album[];
@@ -64,12 +59,7 @@ export const getAlbumsByGroup = async (
 
 export const getGroupMembers = async (groupId: string) => {
     try {
-        const response = await axios.get(
-            `/groups/${groupId}/members?limit=10`,
-            {
-                headers: await getAuthHeader(),
-            }
-        );
+        const response = await http.get(`/groups/${groupId}/members?limit=10`);
         return response.data as GroupMember[];
     } catch (error) {
         return [] as GroupMember[];
@@ -78,9 +68,7 @@ export const getGroupMembers = async (groupId: string) => {
 
 export const getAlbumMembers = async (album: string) => {
     try {
-        const response = await axios.get(`/albums/${album}/members?limit=10`, {
-            headers: await getAuthHeader(),
-        });
+        const response = await http.get(`/albums/${album}/members?limit=10`);
         return response.data as AlbumMember[];
     } catch (error) {
         return [] as AlbumMember[];
@@ -89,9 +77,7 @@ export const getAlbumMembers = async (album: string) => {
 
 export const getGroupInfo = async (groupId: string) => {
     try {
-        const response = await axios.get(`/groups/${groupId}`, {
-            headers: await getAuthHeader(),
-        });
+        const response = await http.get(`/groups/${groupId}`);
         return response.data as GroupInfo;
     } catch (error) {
         return {} as GroupInfo;
@@ -100,9 +86,7 @@ export const getGroupInfo = async (groupId: string) => {
 
 export const getAlbumInfo = async (albumId: string) => {
     try {
-        const response = await axios.get(`/albums/${albumId}`, {
-            headers: await getAuthHeader(),
-        });
+        const response = await http.get(`/albums/${albumId}`);
         return response.data as AlbumInfo;
     } catch (error) {
         return {} as AlbumInfo;
@@ -122,9 +106,8 @@ export const getPhotosByAlbumId = async (
     searchParams: SearchPhotoParams
 ) => {
     try {
-        const { photos, pageMeta } = await axios
+        const { photos, pageMeta } = await http
             .get(`/albums/${albumId}/photos`, {
-                headers: await getAuthHeader(),
                 params: searchParams,
             })
             .then((res) => {
@@ -143,10 +126,8 @@ export const getPhotosByAlbumId = async (
 };
 
 export const getPhotoDetail = async (photoId: string) => {
-    const response = await axios
-        .get(`/photos/${photoId}`, {
-            headers: await getAuthHeader(),
-        })
+    const response = await http
+        .get(`/photos/${photoId}`)
         .then((res) => {
             return res.data as PhotoDetail;
         })
@@ -161,9 +142,8 @@ export const getPhotoComments = async (
     photoId: string,
     searchParams: SearchPhotoCommentParams
 ) => {
-    const { comments, pageMeta } = await axios
+    const { comments, pageMeta } = await http
         .get(`/photos/${photoId}/comments`, {
-            headers: await getAuthHeader(),
             params: searchParams,
         })
         .then((res) => {
@@ -183,10 +163,8 @@ export const getPhotoComments = async (
 };
 
 export const getPhotoReacts = async (photoId: string) => {
-    const response = await axios
-        .get(`/photos/${photoId}/reacts`, {
-            headers: await getAuthHeader(),
-        })
+    const response = await http
+        .get(`/photos/${photoId}/reacts`)
         .then((res) => {
             return res.data as PhotoReact[];
         })
