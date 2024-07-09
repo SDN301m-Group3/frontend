@@ -9,7 +9,6 @@ import CommentAction from './comment-action';
 import { getUser } from '@/lib/action';
 
 export default async function PhotoAction({ photo }: { photo: PhotoDetail }) {
-    const reacts = await getPhotoReacts(photo._id);
     const user = (await getUser()) as User;
 
     return (
@@ -17,16 +16,16 @@ export default async function PhotoAction({ photo }: { photo: PhotoDetail }) {
             <div className="flex gap-4 mt-3">
                 <div className="flex gap-2 items-center">
                     <Heart className="w-4 h-4" />
-                    <span>{reacts.length}</span>
+                    <span>{photo.totalReact}</span>
                 </div>
-                {/* <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center">
                     <MessageCircle className="w-4 h-4" />
-                    <span>12</span>
-                </div> */}
+                    <span>{photo.totalComment}</span>
+                </div>
             </div>
             <Separator className="mb-2 mt-2" />
             <div className="flex justify-between md:px-10 text-sky-500">
-                <PhotoLikeAction isLiked={true} />
+                <PhotoLikeAction isLiked={photo.isReacted} photo={photo} />
                 <CommentAction user={user} photo={photo} />
                 <ButtonShare />
             </div>
