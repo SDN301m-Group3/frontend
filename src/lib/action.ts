@@ -9,11 +9,7 @@ import {
     joinGroupSchema,
 } from './form-schema';
 import axios from '@/config/axios';
-import {
-    AxiosError,
-    AxiosProgressEvent,
-    CancelTokenSource,
-} from 'axios';
+import { AxiosError, AxiosProgressEvent, CancelTokenSource } from 'axios';
 import { cookies } from 'next/headers';
 import {
     AuthResponse,
@@ -220,13 +216,10 @@ export const createGroup = async (
         formData;
 
     const response = await http
-        .post(
-            '/groups/create',
-            {
-                title,
-                description,
-            }
-        )
+        .post('/groups/create', {
+            title,
+            description,
+        })
         .then((res) => {
             return {
                 isSuccess: true,
@@ -250,13 +243,10 @@ export const createAlbum = async (
     const { title, description }: z.infer<typeof createAlbumFormSchema> =
         formData;
     const response = await http
-        .post(
-            `/groups/${groupId}/create-album`,
-            {
-                title,
-                description,
-            }
-        )
+        .post(`/groups/${groupId}/create-album`, {
+            title,
+            description,
+        })
         .then((res) => {
             return {
                 isSuccess: true,
@@ -276,12 +266,9 @@ export const joinGroup = async (formData: z.infer<typeof joinGroupSchema>) => {
     const { code }: z.infer<typeof joinGroupSchema> = formData;
 
     const response = await http
-        .post(
-            '/groups/join',
-            {
-                groupCode: code,
-            }
-        )
+        .post('/groups/join', {
+            groupCode: code,
+        })
         .then((res) => {
             return {
                 isSuccess: true,
@@ -363,12 +350,9 @@ export const getUsers = async (search: string) => {
 
 export const inviteUserToGroup = async (groupId: string, email: string) => {
     const response = await http
-        .post(
-            `/groups/${groupId}/invite`,
-            {
-                email,
-            }
-        )
+        .post(`/groups/${groupId}/invite`, {
+            email,
+        })
         .then((res) => {
             return {
                 isSuccess: true,
@@ -459,12 +443,9 @@ export const removeGroup = async (groupId: string) => {
 
 export const commentOnPhoto = async (photoId: string, comment: string) => {
     const response = await http
-        .post(
-            `/photos/${photoId}/comment`,
-            {
-                content: comment,
-            }
-        )
+        .post(`/photos/${photoId}/comment`, {
+            content: comment,
+        })
         .then((res) => {
             return {
                 isSuccess: true,
@@ -532,6 +513,51 @@ export const uploadPhotoToAws = async (
 ) => {
     return http.post(`/albums/${albumId}/upload-photo`, formData, {
         onUploadProgress,
-        cancelToken: cancelSource.token
+        cancelToken: cancelSource.token,
     });
+};
+
+export const inviteUserToAlbum = async (albumId: string, email: string) => {
+    const response = await http
+        .post(`/albums/${albumId}/invite`, {
+            email,
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+                data: res.data as UserNotification,
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error.response.data?.error.message || 'Unknown error',
+                data: null,
+            };
+        });
+    return response;
+};
+
+export const acceptInviteToAlbum = async (
+    albumId: string,
+    inviteToken: string
+) => {
+    const response = await http
+        .post(`/albums/${albumId}/accept-invite`, undefined, {
+            params: { inviteToken },
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error.response.data?.error.message || 'Unknown error',
+            };
+        });
+    return response;
 };
