@@ -561,3 +561,55 @@ export const uploadPhotoToAws = async (
         headers: await getAuthHeader(),
     });
 };
+
+export const inviteUserToAlbum = async (albumId: string, email: string) => {
+    const response = await axios
+        .post(
+            `/albums/${albumId}/invite`,
+            {
+                email,
+            },
+            {
+                headers: await getAuthHeader(),
+            }
+        )
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+                data: res.data as UserNotification,
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error.response.data?.error.message || 'Unknown error',
+                data: null,
+            };
+        });
+    return response;
+};
+
+export const acceptInviteToAlbum = async (
+    albumId: string,
+    inviteToken: string
+) => {
+    const response = await axios
+        .post(`/albums/${albumId}/accept-invite`, undefined, {
+            headers: await getAuthHeader(),
+            params: { inviteToken },
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error.response.data?.error.message || 'Unknown error',
+            };
+        });
+    return response;
+};
