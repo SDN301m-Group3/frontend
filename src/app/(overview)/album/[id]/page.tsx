@@ -65,8 +65,8 @@ export default async function AlbumPage({
 
     const breadItems = [
         {
-            title: 'Group',
-            url: '/group',
+            title: 'Album',
+            url: '/album',
         },
         {
             title: album?.group?.title || 'Unknown',

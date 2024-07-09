@@ -517,6 +517,60 @@ export const uploadPhotoToAws = async (
     });
 };
 
+export const inviteUserToAlbum = async (albumId: string, email: string) => {
+    const response = await axios
+        .post(
+            `/albums/${albumId}/invite`,
+            {
+                email,
+            },
+            {
+                headers: await getAuthHeader(),
+            }
+        )
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+                data: res.data as UserNotification,
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error.response.data?.error.message || 'Unknown error',
+                data: null,
+            };
+        });
+    return response;
+};
+
+export const acceptInviteToAlbum = async (
+    albumId: string,
+    inviteToken: string
+) => {
+    const response = await axios
+        .post(`/albums/${albumId}/accept-invite`, undefined, {
+            headers: await getAuthHeader(),
+            params: { inviteToken },
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+                data: res.data as UserNotification,
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error.response.data?.error.message || 'Unknown error',
+                data: null,
+            };
+        });
+    return response;
+};
+
 export const reactPhoto = async (photoId: string) => {
     const response = await http
         .post(`/photos/${photoId}/react`)
@@ -530,10 +584,9 @@ export const reactPhoto = async (photoId: string) => {
         .catch((error) => {
             return {
                 isSuccess: false,
-                error: error.response.data.error.message || 'Unknown error',
+                error: error.response.data?.error.message || 'Unknown error',
                 data: null,
             };
         });
-
     return response;
 };
