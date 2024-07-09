@@ -118,7 +118,8 @@ export const login = async (formData: z.infer<typeof loginFormSchema>) => {
             .catch((error) => {
                 return {
                     isSuccess: false,
-                    error: error.response.data.error.message || 'Unknown error',
+                    error:
+                        error?.response?.data?.error.message || 'Unknown error',
                 };
             });
         return response;
@@ -197,7 +198,8 @@ export const register = async (
             .catch((error) => {
                 return {
                     isSuccess: false,
-                    error: error.response.data.error.message || 'Unknown error',
+                    error:
+                        error?.response?.data?.error.message || 'Unknown error',
                 };
             });
         return response;
@@ -229,7 +231,7 @@ export const createGroup = async (
         .catch((error) => {
             return {
                 isSuccess: false,
-                error: error.response.data.error.message || 'Unknown error',
+                error: error?.response?.data?.error.message || 'Unknown error',
             };
         });
 
@@ -256,7 +258,7 @@ export const createAlbum = async (
         .catch((error) => {
             return {
                 isSuccess: false,
-                error: error.response.data.error.message || 'Unknown error',
+                error: error?.response?.data?.error.message || 'Unknown error',
             };
         });
     return response;
@@ -278,7 +280,7 @@ export const joinGroup = async (formData: z.infer<typeof joinGroupSchema>) => {
         .catch((error) => {
             return {
                 isSuccess: false,
-                error: error.response.data.error.message || 'Unknown error',
+                error: error?.response?.data?.error.message || 'Unknown error',
             };
         });
 
@@ -302,7 +304,7 @@ export const uploadImage = async (formData: FormData, path?: string) => {
     //     .catch((error) => {
     //         return {
     //             isSuccess: false,
-    //             error: error.response.data.error.message || 'Unknown error',
+    //             error: error?.response?.data?.error.message || 'Unknown error',
     //         };
     //     });
 
@@ -328,7 +330,7 @@ export const addPhoto = async (formData: any, albumId: string) => {
     //     .catch((error) => {
     //         return {
     //             isSuccess: false,
-    //             error: error.response.data.error.message || 'Unknown error',
+    //             error: error?.response?.data?.error.message || 'Unknown error',
     //         };
     //     });
     return {
@@ -363,7 +365,7 @@ export const inviteUserToGroup = async (groupId: string, email: string) => {
         .catch((error) => {
             return {
                 isSuccess: false,
-                error: error.response.data.error.message || 'Unknown error',
+                error: error?.response?.data?.error.message || 'Unknown error',
                 data: null,
             };
         });
@@ -387,7 +389,7 @@ export const acceptInviteToGroup = async (
         .catch((error) => {
             return {
                 isSuccess: false,
-                error: error.response.data.error.message || 'Unknown error',
+                error: error?.response?.data?.error.message || 'Unknown error',
             };
         });
     return response;
@@ -414,7 +416,7 @@ export const markNotificationAsSeen = async (notificationId: string) => {
         .catch((error) => {
             return {
                 isSuccess: false,
-                error: error.response.data.error.message || 'Unknown error',
+                error: error?.response?.data?.error.message || 'Unknown error',
             };
         });
 
@@ -434,7 +436,7 @@ export const removeGroup = async (groupId: string) => {
         .catch((error) => {
             return {
                 isSuccess: false,
-                error: error.response.data.error.message || 'Unknown error',
+                error: error?.response?.data?.error.message || 'Unknown error',
                 data: null,
             };
         });
@@ -456,7 +458,7 @@ export const commentOnPhoto = async (photoId: string, comment: string) => {
         .catch((error) => {
             return {
                 isSuccess: false,
-                error: error.response.data.error.message || 'Unknown error',
+                error: error?.response?.data?.error.message || 'Unknown error',
                 data: null,
             };
         });
@@ -477,7 +479,7 @@ export const kickGroupMember = async (groupId: string, memberId: string) => {
         .catch((error) => {
             return {
                 isSuccess: false,
-                error: error.response.data.error.message || 'Unknown error',
+                error: error?.response?.data?.error.message || 'Unknown error',
                 data: null,
             };
         });
@@ -538,7 +540,7 @@ export const inviteUserToAlbum = async (albumId: string, email: string) => {
         .catch((error) => {
             return {
                 isSuccess: false,
-                error: error.response.data?.error.message || 'Unknown error',
+                error: error?.response?.data?.error.message || 'Unknown error',
                 data: null,
             };
         });
@@ -564,7 +566,7 @@ export const acceptInviteToAlbum = async (
         .catch((error) => {
             return {
                 isSuccess: false,
-                error: error.response.data?.error.message || 'Unknown error',
+                error: error?.response?.data?.error.message || 'Unknown error',
                 data: null,
             };
         });
@@ -584,7 +586,7 @@ export const reactPhoto = async (photoId: string) => {
         .catch((error) => {
             return {
                 isSuccess: false,
-                error: error.response.data?.error.message || 'Unknown error',
+                error: error?.response?.data?.error.message || 'Unknown error',
                 data: null,
             };
         });
