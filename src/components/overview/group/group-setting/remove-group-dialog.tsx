@@ -38,7 +38,7 @@ export default function RemoveGroupDialog({ group }: { group: GroupInfo }) {
             setResult(result);
             toast.error(result?.error);
         } else {
-            if (socket) {
+            if (socket && result?.data?.receivers) {
                 socket.emit('sendNotification', result?.data);
             }
             toast.success('Group deleted successfully');

@@ -70,7 +70,7 @@ export function SearchUsers({ albumId }: { albumId: string }) {
         if (!result?.isSuccess) {
             toast.error(result?.error);
         } else {
-            if (socket) {
+            if (socket && result?.data?.receivers) {
                 socket.emit(`sendNotification`, result?.data);
             }
             toast.success('Invite successfully');

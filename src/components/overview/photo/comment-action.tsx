@@ -51,7 +51,7 @@ export default function CommentAction({
             toast.error(result.error);
         } else {
             if (photo.owner._id !== user.aud) {
-                if (socket) {
+                if (socket && result?.data?.receivers) {
                     socket.emit(`sendNotification`, result?.data);
                 }
             }

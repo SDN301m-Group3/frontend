@@ -28,7 +28,7 @@ export default function PhotoLikeAction({
                 toast.error(result?.error);
                 setIsLike(!isLike);
             } else {
-                if (socket) {
+                if (socket && result?.data?.receivers) {
                     socket.emit('sendNotification', result?.data);
                 }
                 router.refresh();

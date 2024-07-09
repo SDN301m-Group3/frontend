@@ -181,7 +181,7 @@ export default function PhotoUploadForm({
                         }
                     )
                     .then((res) => {
-                        if (socket) {
+                        if (socket && res?.data?.receivers) {
                             socket.emit(`sendNotification`, res.data);
                         }
                     });

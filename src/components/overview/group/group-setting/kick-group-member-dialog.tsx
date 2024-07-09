@@ -46,7 +46,7 @@ export function KickGroupMemberDialog({
         if (!result?.isSuccess) {
             setResult(result);
         } else {
-            if (socket) {
+            if (socket && result?.data?.receivers) {
                 socket.emit('sendNotification', result?.data);
             }
             toast.success('There is an imposter among us');
