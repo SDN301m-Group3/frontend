@@ -18,10 +18,10 @@ export default function PhotoInfo({ photo }: { photo: PhotoDetail }) {
                     </Avatar>
                     <div className="flex flex-col justify-around">
                         <p className="text-sm font-medium leading-none">
-                            Owner: {photo?.owner?.fullName}{' '}
+                            {photo?.owner?.fullName}{' '}
                         </p>
                         <p className="text-xs leading-none text-muted-foreground">
-                            Email: {photo?.owner?.email}
+                            {photo?.owner?.email}
                         </p>
                     </div>
                 </div>

@@ -18,6 +18,7 @@ import {
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'sonner';
+import imageCompression from 'browser-image-compression';
 interface FileUploadProgress {
     progress: number;
     File: File;
@@ -145,23 +146,42 @@ export default function PhotoUploadForm({ albumId }: { albumId: string }) {
             onUploadProgress: (progressEvent: AxiosProgressEvent) => void,
             cancelSource: CancelTokenSource
         ) => {
-            const result = await axios
-                .post(
-                    `${process.env.NEXT_PUBLIC_API_URL}/albums/${albumId}/upload-photo`,
-                    formData,
-                    {
-                        onUploadProgress,
-                        cancelToken: cancelSource.token,
-                        headers: await getAuthHeader(),
-                    }
-                )
-                .then((res) => {
-                    if (socket) {
-                        socket.emit(`sendNotification`, res.data);
-                    }
-                });
+            try {
+                const imageFile = formData.get('image') as File;
 
-            return result;
+                const options = {
+                    maxSizeMB: 1,
+                    maxWidthOrHeight: 1920,
+                    useWebWorker: true,
+                };
+
+                const compressedFile = await imageCompression(
+                    imageFile,
+                    options
+                );
+
+                formData.set('image', compressedFile);
+
+                const result = await axios
+                    .post(
+                        `${process.env.NEXT_PUBLIC_API_URL}/albums/${albumId}/upload-photo`,
+                        formData,
+                        {
+                            onUploadProgress,
+                            cancelToken: cancelSource.token,
+                            headers: await getAuthHeader(),
+                        }
+                    )
+                    .then((res) => {
+                        if (socket) {
+                            socket.emit(`sendNotification`, res.data);
+                        }
+                    });
+
+                return result;
+            } catch (error) {
+                throw error;
+            }
         },
         [albumId, socket]
     );
