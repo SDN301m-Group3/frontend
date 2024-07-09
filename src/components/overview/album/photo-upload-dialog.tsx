@@ -32,7 +32,7 @@ export default function PhotoUploadDialog({ albumId }: { albumId: string }) {
                     </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
-                    <PhotoUploadForm albumId={albumId} />
+                    <PhotoUploadForm albumId={albumId} setOpen={setOpen} />
                 </div>
             </DialogContent>
         </Dialog>
