@@ -19,17 +19,19 @@ export default function PhotoLikeAction({
     const { socket } = useSocket();
     const [isLike, setIsLike] = useState(isLiked);
     const handleLike = async () => {
+        setIsLike(!isLike);
         try {
             const result = await reactPhoto(photo._id);
             if (!result?.isSuccess) {
                 toast.error(result?.error);
-            } else {
                 setIsLike(!isLike);
+            } else {
                 if (socket) {
                     socket.emit('sendNotification', result?.data);
                 }
             }
         } catch (error) {
+            setIsLike(!isLike);
             toast.error('An error occurred');
         }
     };
