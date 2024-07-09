@@ -19,6 +19,7 @@ import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'sonner';
 import imageCompression from 'browser-image-compression';
+import { useRouter } from 'next/navigation';
 interface FileUploadProgress {
     progress: number;
     File: File;
@@ -58,7 +59,14 @@ const OtherColor = {
     fillColor: 'fill-gray-400',
 };
 
-export default function PhotoUploadForm({ albumId }: { albumId: string }) {
+export default function PhotoUploadForm({
+    albumId,
+    setOpen,
+}: {
+    albumId: string;
+    setOpen: (open: boolean) => void;
+}) {
+    const router = useRouter();
     const { socket } = useSocket();
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
     const [filesToUpload, setFilesToUpload] = useState<FileUploadProgress[]>(
@@ -227,6 +235,8 @@ export default function PhotoUploadForm({ albumId }: { albumId: string }) {
             try {
                 await Promise.all(fileUploadBatch);
                 toast.success('All files uploaded successfully');
+                setOpen(false);
+                router.refresh();
             } catch (error: any) {
                 if (axios.isCancel(error)) {
                     toast.error('Upload cancelled');
