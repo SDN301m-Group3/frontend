@@ -15,6 +15,14 @@ export default async function PhotoCommentList({
         searchParams
     );
 
+    if (!comments.length) {
+        return (
+            <div className="text-gray-500 flex justify-center items-center">
+                No comments yet
+            </div>
+        );
+    }
+
     return (
         <div>
             {comments.map((comment) => (

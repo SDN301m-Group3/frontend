@@ -8,6 +8,7 @@ import { HeartFilledIcon } from '@radix-ui/react-icons';
 import { HeartIcon } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 export default function PhotoLikeAction({
     isLiked,
@@ -17,6 +18,7 @@ export default function PhotoLikeAction({
     photo: PhotoDetail;
 }) {
     const { socket } = useSocket();
+    const router = useRouter();
     const [isLike, setIsLike] = useState(isLiked);
     const handleLike = async () => {
         setIsLike(!isLike);
@@ -29,6 +31,7 @@ export default function PhotoLikeAction({
                 if (socket) {
                     socket.emit('sendNotification', result?.data);
                 }
+                router.refresh();
             }
         } catch (error) {
             setIsLike(!isLike);
