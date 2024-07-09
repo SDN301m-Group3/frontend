@@ -241,18 +241,9 @@ export type PhotoDetail = {
         _id: string;
         title: string;
     };
-    reacts: [
-        {
-            id: string;
-            createdAt: string;
-            owner: {
-                id: string;
-                fullName: string;
-                username: string;
-                email: string;
-            };
-        },
-    ];
+    isReacted: boolean;
+    totalReact: number;
+    totalComment: number;
 };
 
 export type PhotoReact = {
