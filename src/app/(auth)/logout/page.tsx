@@ -11,7 +11,7 @@ export default function LogoutPage() {
         logout().then(() => {
             router.push('/login'); // redirect to login after logout
         });
-    }, []);
+    }, [router]);
 
     return (
         <div>

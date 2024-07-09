@@ -18,6 +18,7 @@ import {
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'sonner';
+import imageCompression from 'browser-image-compression';
 interface FileUploadProgress {
     progress: number;
     File: File;
@@ -139,29 +140,51 @@ export default function PhotoUploadForm({ albumId }: { albumId: string }) {
         });
     };
 
-    const uploadPhotoToAws = async (
-        formData: FormData,
-        onUploadProgress: (progressEvent: AxiosProgressEvent) => void,
-        cancelSource: CancelTokenSource
-    ) => {
-        const result = await axios
-            .post(
-                `http://localhost:9999/albums/${albumId}/upload-photo`,
-                formData,
-                {
-                    onUploadProgress,
-                    cancelToken: cancelSource.token,
-                    headers: await getAuthHeader(),
-                }
-            )
-            .then((res) => {
-                if (socket) {
-                    socket.emit(`sendNotification`, res.data);
-                }
-            });
+    const uploadPhotoToAws = useCallback(
+        async (
+            formData: FormData,
+            onUploadProgress: (progressEvent: AxiosProgressEvent) => void,
+            cancelSource: CancelTokenSource
+        ) => {
+            try {
+                const imageFile = formData.get('image') as File;
 
-        return result;
-    };
+                const options = {
+                    maxSizeMB: 1,
+                    maxWidthOrHeight: 1920,
+                    useWebWorker: true,
+                };
+
+                const compressedFile = await imageCompression(
+                    imageFile,
+                    options
+                );
+
+                formData.set('image', compressedFile);
+
+                const result = await axios
+                    .post(
+                        `${process.env.NEXT_PUBLIC_API_URL}/albums/${albumId}/upload-photo`,
+                        formData,
+                        {
+                            onUploadProgress,
+                            cancelToken: cancelSource.token,
+                            headers: await getAuthHeader(),
+                        }
+                    )
+                    .then((res) => {
+                        if (socket) {
+                            socket.emit(`sendNotification`, res.data);
+                        }
+                    });
+
+                return result;
+            } catch (error) {
+                throw error;
+            }
+        },
+        [albumId, socket]
+    );
 
     const removeFile = (file: File) => {
         setFilesToUpload((prevUploadProgress) => {
@@ -173,50 +196,53 @@ export default function PhotoUploadForm({ albumId }: { albumId: string }) {
         });
     };
 
-    const onDrop = useCallback(async (acceptedFiles: File[]) => {
-        setFilesToUpload((prevUploadProgress) => {
-            return [
-                ...prevUploadProgress,
-                ...acceptedFiles.map((file) => {
-                    return {
-                        progress: 0,
-                        File: file,
-                        source: null,
-                    };
-                }),
-            ];
-        });
+    const onDrop = useCallback(
+        async (acceptedFiles: File[]) => {
+            setFilesToUpload((prevUploadProgress) => {
+                return [
+                    ...prevUploadProgress,
+                    ...acceptedFiles.map((file) => {
+                        return {
+                            progress: 0,
+                            File: file,
+                            source: null,
+                        };
+                    }),
+                ];
+            });
 
-        const fileUploadBatch = acceptedFiles.map((file) => {
-            const formData = new FormData();
-            formData.append('image', file);
+            const fileUploadBatch = acceptedFiles.map((file) => {
+                const formData = new FormData();
+                formData.append('image', file);
 
-            const cancelSource = axios.CancelToken.source();
-            return uploadPhotoToAws(
-                formData,
-                (progressEvent) =>
-                    onUploadProgress(progressEvent, file, cancelSource),
-                cancelSource
-            );
-        });
-
-        try {
-            await Promise.all(fileUploadBatch);
-            toast.success('All files uploaded successfully');
-        } catch (error: any) {
-            if (axios.isCancel(error)) {
-                toast.error('Upload cancelled');
-            } else {
-                removeFile(acceptedFiles[0]);
-                toast.error(
-                    'Error uploading files: ' +
-                        error?.response?.data?.error?.message ||
-                        error ||
-                        'Unknown error'
+                const cancelSource = axios.CancelToken.source();
+                return uploadPhotoToAws(
+                    formData,
+                    (progressEvent) =>
+                        onUploadProgress(progressEvent, file, cancelSource),
+                    cancelSource
                 );
+            });
+
+            try {
+                await Promise.all(fileUploadBatch);
+                toast.success('All files uploaded successfully');
+            } catch (error: any) {
+                if (axios.isCancel(error)) {
+                    toast.error('Upload cancelled');
+                } else {
+                    removeFile(acceptedFiles[0]);
+                    toast.error(
+                        'Error uploading files: ' +
+                            error?.response?.data?.error?.message ||
+                            error ||
+                            'Unknown error'
+                    );
+                }
             }
-        }
-    }, []);
+        },
+        [uploadPhotoToAws]
+    );
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 

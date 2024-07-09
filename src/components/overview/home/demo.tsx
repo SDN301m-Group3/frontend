@@ -18,7 +18,7 @@ const SkeletonOne = () => {
             </p>
             <p className="font-normal text-base text-white"></p>
             <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
-                Easily store and organize your group's photos in one secure
+                Easily store and organize your group&apos;s photos in one secure
                 place.
             </p>
         </div>
@@ -29,7 +29,7 @@ const SkeletonTwo = () => {
     return (
         <div>
             <p className="font-bold text-4xl text-white">
-                Preserve Your Group's Memories in One Place
+                Preserve Your Group&apos;s Memories in One Place
             </p>
             <p className="font-normal text-base text-white"></p>
             <p className="font-normal text-base my-4 max-w-lg text-neutral-200">

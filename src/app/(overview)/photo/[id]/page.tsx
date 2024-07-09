@@ -1,3 +1,4 @@
+import ActionSection from '@/components/overview/photo/action-section';
 import PhotoAction from '@/components/overview/photo/photo-action';
 import PhotoCommentList from '@/components/overview/photo/photo-comment-list';
 import PhotoInfo from '@/components/overview/photo/photo-info';
@@ -6,27 +7,38 @@ import PhotoView from '@/components/overview/photo/photo-view';
 import BreadcrumbComponent from '@/components/shared/breadcrumb-component';
 import SpinLoading from '@/components/shared/spin-loading';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { getUser } from '@/lib/action';
 import { getPhotoDetail } from '@/lib/data';
-import { BreadItem, PhotoDetail, SearchPhotoCommentParams } from '@/lib/define';
+import {
+    BreadItem,
+    PhotoDetail,
+    SearchPhotoCommentParams,
+    User,
+} from '@/lib/define';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 
-type Props = {
-    params: { id: string };
-    searchParams: SearchPhotoCommentParams;
+// type Props = {
+//     params: { id: string };
+//     searchParams: SearchPhotoCommentParams;
+// };
+
+// export async function generateMetadata({
+//     params,
+//     searchParams,
+// }: Props): Promise<Metadata> {
+//     const photo = (await getPhotoDetail(params.id)) as PhotoDetail;
+
+//     return {
+//         title: `Photo: ${photo?.title || 'No title'}`,
+//         description: `Photo: ${photo?.title || 'No title'} - upload by ${photo?.owner?.username}`,
+//     };
+// }
+
+export const metadata: Metadata = {
+    title: 'Photo',
+    description: 'Photo detail page',
 };
-
-export async function generateMetadata({
-    params,
-    searchParams,
-}: Props): Promise<Metadata> {
-    const photo = (await getPhotoDetail(params.id)) as PhotoDetail;
-
-    return {
-        title: `Photo: ${photo?.title || 'No title'}`,
-        description: `Photo: ${photo?.title || 'No title'} - upload by ${photo?.owner?.username}`,
-    };
-}
 
 export default async function PhotoPage({
     params,
@@ -38,6 +50,7 @@ export default async function PhotoPage({
     const { id } = params;
 
     const photo = (await getPhotoDetail(id)) as PhotoDetail;
+    const user = (await getUser()) as User;
 
     if (!photo?._id) {
         return <PhotoNotFound />;
@@ -74,7 +87,8 @@ export default async function PhotoPage({
                 <div className="col-span-1">
                     <PhotoInfo photo={photo} />
 
-                    <PhotoAction photo={photo} />
+                    {/* <PhotoAction photo={photo} /> */}
+                    <ActionSection photo={photo} user={user} />
 
                     <ScrollArea className="h-[50vh]">
                         <Suspense

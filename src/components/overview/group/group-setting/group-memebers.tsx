@@ -71,12 +71,18 @@ export default function GroupMembers({
                                                             <BookUser className="w-5 h-5" />
                                                         </div>
                                                         {group.owner._id ===
-                                                            user?.aud && (
-                                                            <KickGroupMemberDialog
-                                                                group={group}
-                                                                member={member}
-                                                            />
-                                                        )}
+                                                            user?.aud &&
+                                                            member._id !==
+                                                                user?.aud && (
+                                                                <KickGroupMemberDialog
+                                                                    group={
+                                                                        group
+                                                                    }
+                                                                    member={
+                                                                        member
+                                                                    }
+                                                                />
+                                                            )}
                                                     </div>
                                                 </div>
                                             </PopoverContent>

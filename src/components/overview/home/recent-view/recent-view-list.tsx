@@ -1,5 +1,6 @@
 import { CardImage } from '@/components/shared/card-image';
-import RecentViewCard from './recent-view-card';
+import { getRecentViewPhotos } from '@/lib/data';
+import { RecentPhoto } from '@/lib/define';
 
 const recentImage = {
     _id: 'fsdsdsd',
@@ -18,12 +19,13 @@ const recentImage = {
     },
 };
 
-export function RecentViewList() {
+export async function RecentViewList() {
+    const photos = (await getRecentViewPhotos(15)) as RecentPhoto[];
     return (
-        <div className="my-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <CardImage image={recentImage} />
-            <CardImage image={recentImage} />
-            <CardImage image={recentImage} />
+        <div className="my-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {photos.map((photo) => (
+                <CardImage key={photo._id} photo={photo} />
+            ))}
         </div>
     );
 }

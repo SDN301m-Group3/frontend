@@ -19,7 +19,7 @@ export default function GroupAlbums({ group }: { group: GroupInfo }) {
         <Card>
             <CardContent className="mt-5">
                 <ScrollArea className="h-72">
-                    {group.albums.map(album => (
+                    {group.albums.map((album) => (
                         <div key={album._id} className="mb-2">
                             <div className="flex flex-col gap-2 justify-around">
                                 <p className="text-sm font-medium leading-none line-clamp-1">

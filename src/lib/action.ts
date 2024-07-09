@@ -8,11 +8,8 @@ import {
     registerFormSchema,
     joinGroupSchema,
 } from './form-schema';
-import axios, {
-    AxiosError,
-    AxiosProgressEvent,
-    CancelTokenSource,
-} from 'axios';
+import axios from '@/config/axios';
+import { AxiosError, AxiosProgressEvent, CancelTokenSource } from 'axios';
 import { cookies } from 'next/headers';
 import {
     AuthResponse,
@@ -22,9 +19,8 @@ import {
     UserNotification,
 } from './define';
 import { getImageSize } from 'react-image-size';
+import http from '@/config/axios';
 // import cookie from '@boiseitguru/cookie-cutter';
-
-axios.defaults.baseURL = process.env.API_URL;
 
 const maxAgeRefreshToken = 60 * 60 * 24 * 365;
 
@@ -219,17 +215,11 @@ export const createGroup = async (
     const { title, description }: z.infer<typeof createGroupFormSchema> =
         formData;
 
-    const response = await axios
-        .post(
-            '/groups/create',
-            {
-                title,
-                description,
-            },
-            {
-                headers: await getAuthHeader(),
-            }
-        )
+    const response = await http
+        .post('/groups/create', {
+            title,
+            description,
+        })
         .then((res) => {
             return {
                 isSuccess: true,
@@ -252,17 +242,11 @@ export const createAlbum = async (
 ) => {
     const { title, description }: z.infer<typeof createAlbumFormSchema> =
         formData;
-    const response = await axios
-        .post(
-            `/groups/${groupId}/create-album`,
-            {
-                title,
-                description,
-            },
-            {
-                headers: await getAuthHeader(),
-            }
-        )
+    const response = await http
+        .post(`/groups/${groupId}/create-album`, {
+            title,
+            description,
+        })
         .then((res) => {
             return {
                 isSuccess: true,
@@ -281,16 +265,10 @@ export const createAlbum = async (
 export const joinGroup = async (formData: z.infer<typeof joinGroupSchema>) => {
     const { code }: z.infer<typeof joinGroupSchema> = formData;
 
-    const response = await axios
-        .post(
-            '/groups/join',
-            {
-                groupCode: code,
-            },
-            {
-                headers: await getAuthHeader(),
-            }
-        )
+    const response = await http
+        .post('/groups/join', {
+            groupCode: code,
+        })
         .then((res) => {
             return {
                 isSuccess: true,
@@ -361,8 +339,7 @@ export const addPhoto = async (formData: any, albumId: string) => {
 
 export const getUsers = async (search: string) => {
     try {
-        const response = await axios.get('/users', {
-            headers: await getAuthHeader(),
+        const response = await http.get('/users', {
             params: { search },
         });
         return response.data as SearchUser[];
@@ -372,16 +349,10 @@ export const getUsers = async (search: string) => {
 };
 
 export const inviteUserToGroup = async (groupId: string, email: string) => {
-    const response = await axios
-        .post(
-            `/groups/${groupId}/invite`,
-            {
-                email,
-            },
-            {
-                headers: await getAuthHeader(),
-            }
-        )
+    const response = await http
+        .post(`/groups/${groupId}/invite`, {
+            email,
+        })
         .then((res) => {
             return {
                 isSuccess: true,
@@ -403,9 +374,8 @@ export const acceptInviteToGroup = async (
     groupId: string,
     inviteToken: string
 ) => {
-    const response = await axios
+    const response = await http
         .post(`/groups/${groupId}/accept-invite`, undefined, {
-            headers: await getAuthHeader(),
             params: { inviteToken },
         })
         .then((res) => {
@@ -425,9 +395,7 @@ export const acceptInviteToGroup = async (
 
 export const getUserNotifications = async () => {
     try {
-        const response = await axios.get('/notifications/my-notifications', {
-            headers: await getAuthHeader(),
-        });
+        const response = await http.get('/notifications/my-notifications');
         return response.data as UserNotification[];
     } catch (error) {
         return [] as UserNotification[];
@@ -435,10 +403,8 @@ export const getUserNotifications = async () => {
 };
 
 export const markNotificationAsSeen = async (notificationId: string) => {
-    const response = await axios
-        .put(`/notifications/${notificationId}/mark-as-seen`, undefined, {
-            headers: await getAuthHeader(),
-        })
+    const response = await http
+        .put(`/notifications/${notificationId}/mark-as-seen`, undefined)
         .then((res) => {
             return {
                 isSuccess: true,
@@ -456,10 +422,8 @@ export const markNotificationAsSeen = async (notificationId: string) => {
 };
 
 export const removeGroup = async (groupId: string) => {
-    const response = await axios
-        .put(`groups/${groupId}/remove`, undefined, {
-            headers: await getAuthHeader(),
-        })
+    const response = await http
+        .put(`groups/${groupId}/remove`, undefined)
         .then((res) => {
             return {
                 isSuccess: true,
@@ -478,16 +442,10 @@ export const removeGroup = async (groupId: string) => {
 };
 
 export const commentOnPhoto = async (photoId: string, comment: string) => {
-    const response = await axios
-        .post(
-            `/photos/${photoId}/comment`,
-            {
-                content: comment,
-            },
-            {
-                headers: await getAuthHeader(),
-            }
-        )
+    const response = await http
+        .post(`/photos/${photoId}/comment`, {
+            content: comment,
+        })
         .then((res) => {
             return {
                 isSuccess: true,
@@ -507,10 +465,8 @@ export const commentOnPhoto = async (photoId: string, comment: string) => {
 };
 
 export const kickGroupMember = async (groupId: string, memberId: string) => {
-    const response = await axios
-        .put(`groups/${groupId}/remove-user/${memberId}`, undefined, {
-            headers: await getAuthHeader(),
-        })
+    const response = await http
+        .put(`groups/${groupId}/remove-user/${memberId}`, undefined)
         .then((res) => {
             return {
                 isSuccess: true,
@@ -555,10 +511,9 @@ export const uploadPhotoToAws = async (
     onUploadProgress: (progressEvent: AxiosProgressEvent) => void,
     cancelSource: CancelTokenSource
 ) => {
-    return axios.post(`/albums/${albumId}/upload-photo`, formData, {
+    return http.post(`/albums/${albumId}/upload-photo`, formData, {
         onUploadProgress,
         cancelToken: cancelSource.token,
-        headers: await getAuthHeader(),
     });
 };
 
@@ -603,12 +558,34 @@ export const acceptInviteToAlbum = async (
             return {
                 isSuccess: true,
                 error: '',
+                data: res.data as UserNotification,
             };
         })
         .catch((error) => {
             return {
                 isSuccess: false,
                 error: error.response.data?.error.message || 'Unknown error',
+                data: null,
+            };
+        });
+    return response;
+};
+
+export const reactPhoto = async (photoId: string) => {
+    const response = await http
+        .post(`/photos/${photoId}/react`)
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+                data: res.data as UserNotification,
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error.response.data?.error.message || 'Unknown error',
+                data: null,
             };
         });
     return response;

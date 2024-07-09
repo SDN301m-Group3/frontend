@@ -12,7 +12,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { User, UserNotification } from '@/lib/define';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useSocket } from '@/components/socket-io-provider';
 import { getUserNotifications, markNotificationAsSeen } from '@/lib/action';
@@ -26,6 +26,24 @@ export default function Notification({ user }: { user: User }) {
     const router = useRouter();
     const { socket } = useSocket();
     const [notification, setNotification] = useState<UserNotification[]>([]);
+
+    const handleSeenNoti = useCallback(
+        async (noti: UserNotification) => {
+            setNotification((prevNotifications) =>
+                prevNotifications.map((notificationItem) => {
+                    if (notificationItem._id === noti._id) {
+                        if (notificationItem.seen.includes(user.aud))
+                            return notificationItem;
+                        notificationItem.seen.push(user.aud);
+                        return notificationItem;
+                    }
+                    return notificationItem;
+                })
+            );
+            await markNotificationAsSeen(noti._id);
+        },
+        [setNotification, user.aud]
+    );
 
     useEffect(() => {
         if (socket) {
@@ -58,7 +76,7 @@ export default function Notification({ user }: { user: User }) {
                 socket.off('getNotification');
             }
         };
-    }, [socket]);
+    }, [socket, handleSeenNoti, router]);
 
     useEffect(() => {
         // Fetch notifications when the component mounts
@@ -67,20 +85,6 @@ export default function Notification({ user }: { user: User }) {
         });
     }, []);
 
-    const handleSeenNoti = async (noti: UserNotification) => {
-        setNotification((prevNotifications) =>
-            prevNotifications.map((notificationItem) => {
-                if (notificationItem._id === noti._id) {
-                    if (notificationItem.seen.includes(user.aud))
-                        return notificationItem;
-                    notificationItem.seen.push(user.aud);
-                    return notificationItem;
-                }
-                return notificationItem;
-            })
-        );
-        await markNotificationAsSeen(noti._id);
-    };
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>

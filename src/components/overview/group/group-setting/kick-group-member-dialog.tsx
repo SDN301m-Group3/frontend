@@ -79,6 +79,7 @@ export function KickGroupMemberDialog({
                     </DialogHeader>
                     <div className="items-top flex space-x-2">
                         <Checkbox
+                            checked={checkbox}
                             id="terms1"
                             onCheckedChange={handleCheckboxChange}
                         />

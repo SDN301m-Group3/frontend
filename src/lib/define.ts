@@ -241,18 +241,9 @@ export type PhotoDetail = {
         _id: string;
         title: string;
     };
-    reacts: [
-        {
-            id: string;
-            createdAt: string;
-            owner: {
-                id: string;
-                fullName: string;
-                username: string;
-                email: string;
-            };
-        },
-    ];
+    isReacted: boolean;
+    totalReact: number;
+    totalComment: number;
 };
 
 export type PhotoReact = {
@@ -277,4 +268,30 @@ export type PhotoComment = {
         email: string;
         img: string;
     };
+};
+
+export type RecentPhoto = {
+    _id: string;
+    actionType: string;
+    photo: {
+        _id: string;
+        album: {
+            _id: string;
+            group: {
+                _id: string;
+                title: string;
+            };
+            title: string;
+        };
+        owner: {
+            _id: string;
+            username: string;
+            email: string;
+            fullName: string;
+            img: string;
+        };
+        url: string;
+    };
+    createdAt: string;
+    updatedAt: string;
 };
