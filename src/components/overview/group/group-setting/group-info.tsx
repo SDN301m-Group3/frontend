@@ -11,7 +11,6 @@ import {
 import { GroupInfo, User } from '@/lib/define';
 import { getDateFormatted } from '@/lib/utils';
 import OutGroupDialog from './out-group-dialog';
-
 export default function GroupInformation({
     group,
     user,
