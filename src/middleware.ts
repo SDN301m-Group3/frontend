@@ -7,7 +7,7 @@ export const config = {
 
 const apiRequireAuth = ['/api/auth/update-token'];
 
-const urlRequireAuthenticated = ['/group', '/group/*', '/album', '/album/*'];
+const urlRequireAuthenticated = ['/group', '/group/*', '/album', '/album/*', '/photo/*'];
 
 const urlRequireUnauthenticated = ['/login', '/register'];
 
