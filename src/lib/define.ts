@@ -225,6 +225,7 @@ export type PhotoDetail = {
     title: string;
     tags: string[];
     url: string;
+    mimeType: string,
     createdAt: string;
     owner: {
         _id: string;
