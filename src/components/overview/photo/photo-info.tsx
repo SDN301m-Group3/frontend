@@ -3,8 +3,16 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { PhotoDetail } from '@/lib/define';
 import { getDateFormatted, getFormatDistanceToNow } from '@/lib/utils';
+import FileSaver from 'file-saver';
 
 export default function PhotoInfo({ photo }: { photo: PhotoDetail }) {
+
+    const handleDownloadPhoto = () => {
+        if (!photo) console.error('Photo not found');
+        const fileExtension = photo?.url.split('.').pop();  // *.(file extension)
+        FileSaver.saveAs(photo?.url, `${photo?.title}.${fileExtension}`);
+    }
+
     return (
         <>
             <div className="flex justify-between items-center">
@@ -25,7 +33,11 @@ export default function PhotoInfo({ photo }: { photo: PhotoDetail }) {
                         </p>
                     </div>
                 </div>
-                <Button>Download</Button>
+                <Button
+                    onClick={handleDownloadPhoto}
+                >
+                    Download
+                </Button>
             </div>
             <div className="my-2 flex gap-2 flex-wrap">
                 {photo?.tags?.map((tag, index) => (
