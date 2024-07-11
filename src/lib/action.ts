@@ -87,6 +87,15 @@ export async function getUser() {
     return user ? (JSON.parse(user.value) as User) : null;
 }
 
+function base64Decode(str: string) {
+    // Convert Base64 encoded bytes to percent-encoding, and then get the original string.
+    const percentEncodedStr = atob(str.replace(/_/g, '/').replace(/-/g, '+'))
+        .split('')
+        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('');
+    return decodeURIComponent(percentEncodedStr);
+}
+
 export const login = async (formData: z.infer<typeof loginFormSchema>) => {
     try {
         const { email, password }: z.infer<typeof loginFormSchema> = formData;
@@ -98,7 +107,7 @@ export const login = async (formData: z.infer<typeof loginFormSchema>) => {
             .then((res) => {
                 const { accessToken, refreshToken } = res.data;
 
-                let payload = atob(accessToken.split('.')[1]);
+                let payload = base64Decode(accessToken.split('.')[1]);
                 const cookie = cookies();
                 const user = JSON.parse(payload) as User;
                 cookie.set('refresh-token', refreshToken, {
