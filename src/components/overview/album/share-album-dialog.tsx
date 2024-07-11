@@ -30,9 +30,10 @@ export function ShareAlbumDialog({
                 <DialogHeader>
                     <DialogTitle>Share album {album.title}</DialogTitle>
                     <DialogDescription>
-                        Share this album with people who don't have an account
-                        by providing them with the album link. They will be able
-                        to view the gallery mode without needing to sign in.
+                        Share this album with people who don&apos;t have an
+                        account by providing them with the album link. They will
+                        be able to view the gallery mode without needing to sign
+                        in.
                     </DialogDescription>
                 </DialogHeader>
                 <ShareAlbumForm album={album} user={user} />

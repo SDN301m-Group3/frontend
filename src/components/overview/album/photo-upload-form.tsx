@@ -251,7 +251,7 @@ export default function PhotoUploadForm({
                 }
             }
         },
-        [uploadPhotoToAws]
+        [uploadPhotoToAws, router, setOpen]
     );
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
