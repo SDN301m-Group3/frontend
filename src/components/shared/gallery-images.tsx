@@ -10,7 +10,6 @@ import {
 } from '@/components/ui/carousel';
 import Image from 'next/image';
 import { Photo } from '@/lib/define';
-import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 import Link from 'next/link';
 
 const Gallery = ({ photos }: { photos: Photo[] }) => {
@@ -45,6 +44,7 @@ const Gallery = ({ photos }: { photos: Photo[] }) => {
                             width={1000}
                             height={1000}
                             quality={100}
+                            priority={true}
                         />
                     </Link>
                 </CarouselItem>
@@ -64,6 +64,7 @@ const Gallery = ({ photos }: { photos: Photo[] }) => {
                         className={`${index === current ? 'border-primary border-2 rounded-lg' : 'rounded-lg'}`}
                         src={photo.url}
                         fill
+                        sizes="100px"
                         alt={`Carousel Thumbnail Image ${index + 1}: ${photo?.title || 'Photo'}`}
                         style={{ objectFit: 'cover' }}
                     />

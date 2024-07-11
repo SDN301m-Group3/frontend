@@ -592,3 +592,25 @@ export const reactPhoto = async (photoId: string) => {
         });
     return response;
 };
+
+export const shareAlbum = async (albumId: string, time: number) => {
+    const response = await http
+        .post(`/albums/${albumId}/share`, {
+            time,
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+                data: res.data,
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error?.response?.data?.error.message || 'Unknown error',
+                data: null,
+            };
+        });
+    return response;
+};
