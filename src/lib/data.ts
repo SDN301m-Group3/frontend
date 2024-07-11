@@ -15,6 +15,7 @@ import {
     SearchAlbumParams,
     SearchPhotoCommentParams,
     SearchPhotoParams,
+    SearchSharePhotoParams,
     SearchUser,
 } from './define';
 import http from '@/config/axios';
@@ -100,6 +101,34 @@ const pageMetaDefault = {
     hasNext: false,
     hasPrev: false,
 } as PageMeta;
+
+export const getSharePhotosByAlbumId = async (
+    albumId: string,
+    searchParams: SearchSharePhotoParams
+) => {
+    try {
+        const { photos, pageMeta, shareUser, expiredTime } = await http
+            .get(`/albums/${albumId}/photos/share`, {
+                params: searchParams,
+            })
+            .then((res) => {
+                return {
+                    photos: res.data.photos as Photo[],
+                    shareUser: res.data.shareUser as SearchUser,
+                    pageMeta: res.data.pageMeta as PageMeta,
+                    expiredTime: res.data.expiredTime as string,
+                };
+            });
+        return { photos, pageMeta, shareUser, expiredTime };
+    } catch (error) {
+        return {
+            photos: [] as Photo[],
+            pageMeta: pageMetaDefault as PageMeta,
+            shareUser: {} as SearchUser,
+            expiredTime: '',
+        };
+    }
+};
 
 export const getPhotosByAlbumId = async (
     albumId: string,
