@@ -1,4 +1,5 @@
 import CommentText from '@/components/shared/comment-text';
+import { BasicTooltip } from '@/components/shared/tool-tip';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card } from '@/components/ui/card';
 import { PhotoComment } from '@/lib/define';
@@ -19,16 +20,15 @@ export default async function PhotoCommentItem({
                     />
                     <AvatarFallback>A</AvatarFallback>
                 </Avatar>
-                <Card className="p-4 pb-2 relative max-w-[90%]">
-                    <div className="flex gap-2">
+                <Card className="p-4 pb-2 relative w-full">
+                    <div className="flex gap-2 justify-between">
                         <p className="text-base font-bold leading-none text-primary">
-                            {comment.user.fullName}
-                        </p>
-                        <p className="text-base leading-none text-muted-foreground max-md:hidden">
-                            @{comment.user.username}
+                            <BasicTooltip title={`${comment.user.fullName}`} />
                         </p>
                         <p className="text-base leading-none text-muted-foreground">
-                            {getFormatDistanceToNow(comment.createdAt)}
+                            <BasicTooltip
+                                title={`${getFormatDistanceToNow(comment.createdAt)}`}
+                            />
                         </p>
                     </div>
                     <div className="mt-3">
