@@ -21,6 +21,14 @@ const recentImage = {
 
 export async function RecentViewList() {
     const photos = (await getRecentViewPhotos(15)) as RecentPhoto[];
+
+    if (photos.length === 0) {
+        return (
+            <div className="flex justify-center items-center h-24">
+                No photos found
+            </div>
+        );
+    }
     return (
         <div className="my-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {photos.map((photo) => (

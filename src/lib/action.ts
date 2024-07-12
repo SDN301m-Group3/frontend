@@ -623,3 +623,24 @@ export const shareAlbum = async (albumId: string, time: number) => {
         });
     return response;
 };
+
+export const active = async (token: string, active: string) => {
+    return await http
+        .get(`/auth/activate/${token}`, {
+            params: { active },
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+                message: res.data.message,
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error?.response?.data?.error.message || 'Unknown error',
+                message: '',
+            };
+        });
+};
