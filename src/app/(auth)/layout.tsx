@@ -24,7 +24,7 @@ export default function AuthLayout({
                 href={'/'}
                 className={cn(
                     buttonVariants({ variant: 'ghost' }),
-                    'absolute md:hidden left-4 top-4'
+                    'absolute lg:hidden left-4 top-4'
                 )}
             >
                 Home
