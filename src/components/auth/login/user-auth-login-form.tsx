@@ -50,7 +50,8 @@ export default function UserAuthLoginForm({ message }: { message?: string }) {
         } else {
             setLoginResult({ isSuccess: true });
             router.push(callbackUrl || '/');
-            router.refresh();
+            // App reload to update user to socket
+            window.location.reload();
         }
         setIsLoading(false);
     };
