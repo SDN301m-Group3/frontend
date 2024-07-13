@@ -22,7 +22,7 @@ import { getImageSize } from 'react-image-size';
 import http from '@/config/axios';
 // import cookie from '@boiseitguru/cookie-cutter';
 
-const maxAgeRefreshToken = 60 * 60 * 24 * 365;
+const maxAgeRefreshToken = 60 * 60 * 24 * 7;
 
 export async function refreshAccessToken(token: string) {
     return await axios

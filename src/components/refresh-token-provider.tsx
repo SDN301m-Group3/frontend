@@ -28,8 +28,8 @@ export function RefreshTokenProvider({
                     router.push('/logout');
                 }
             },
-            1000 * 50 * 10
-        ); // 50 minutes
+            1000 * 60 * 60 * 4
+        ); // 4 hours
 
         return () => clearInterval(interval);
     }, [router]);
