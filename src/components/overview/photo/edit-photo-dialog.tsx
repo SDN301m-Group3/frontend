@@ -30,6 +30,7 @@ import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { DeletePhotoDialog } from './delete-photo-dialog';
 
 export function EditPhotoDialog({ photo }: { photo: PhotoDetail }) {
     const router = useRouter();
@@ -65,7 +66,7 @@ export function EditPhotoDialog({ photo }: { photo: PhotoDetail }) {
             toast.success('Edit photo successfully');
             setOpen(false);
         } else {
-            toast.error(result?.error?.message || 'Edit photo failed');
+            toast.error(result?.error || 'Edit photo failed');
         }
         setIsLoading(false);
     }
@@ -156,7 +157,7 @@ export function EditPhotoDialog({ photo }: { photo: PhotoDetail }) {
                             )}
                         </div>
                         <div className="flex justify-between md:justify-end gap-2">
-                            <Button variant="destructive">Delete photo</Button>
+                            <DeletePhotoDialog photo={photo} />
                             <Button type="submit" disabled={isLoading}>
                                 {isLoading && (
                                     <Icons.spinner className=" mr-2 h-4 w-4 animate-spin" />
