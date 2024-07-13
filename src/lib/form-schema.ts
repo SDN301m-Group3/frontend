@@ -96,6 +96,31 @@ export const uploadPhotoSchema = z.object({
         }),
 });
 
+export const editPhotoSchema = z.object({
+    title: z
+        .string({ required_error: 'Title can not empty' })
+        .min(3, {
+            message: 'Title must be at least 3 characters',
+        })
+        .max(50, {
+            message: 'Title must be maximum 50 characters',
+        }),
+    tags: z
+        .array(
+            z.object({
+                value: z
+                    .string()
+                    .min(1, { message: 'Tag can not empty' })
+                    .max(20, { message: 'Tag must be maximum 15 characters' }),
+            })
+        )
+        .max(5, { message: 'Number of tags can not greater than 5' })
+        .refine((items) => new Set(items).size === items.length, {
+            message: 'Tag must be unique',
+        })
+        .optional(),
+});
+
 export const photoCommentSchema = z.object({
     content: z
         .string()

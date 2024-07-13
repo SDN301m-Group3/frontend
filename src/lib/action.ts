@@ -644,3 +644,27 @@ export const active = async (token: string, active: string) => {
             };
         });
 };
+
+export const editPhoto = async (
+    photoId: string,
+    title: string,
+    tags: string[]
+) => {
+    return await http
+        .patch(`/photos/${photoId}`, {
+            title,
+            tags,
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error?.response?.data?.error.message || 'Unknown error',
+            };
+        });
+};

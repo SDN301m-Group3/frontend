@@ -2,18 +2,21 @@
 
 import ButtonShare from '@/components/shared/button-share';
 import { Separator } from '@/components/ui/separator';
-import { PhotoDetail } from '@/lib/define';
-import { Heart, MessageCircle } from 'lucide-react';
+import { PhotoDetail, User } from '@/lib/define';
+import { FilePenLine, Heart, MessageCircle } from 'lucide-react';
 import PhotoLikeAction from './photo-like-action';
+import { EditPhotoDialog } from './edit-photo-dialog';
 
 export default function PhotoAction({
     photo,
     openComment,
     setOpenComment,
+    user,
 }: {
     photo: PhotoDetail;
     openComment: boolean;
     setOpenComment: (openComment: boolean) => void;
+    user: User;
 }) {
     return (
         <div>
@@ -38,6 +41,9 @@ export default function PhotoAction({
                     <MessageCircle />
                 </div>
                 <ButtonShare />
+                {photo?.owner?._id === user.aud && (
+                    <EditPhotoDialog photo={photo} />
+                )}
             </div>
             <Separator className="my-2" />
         </div>
