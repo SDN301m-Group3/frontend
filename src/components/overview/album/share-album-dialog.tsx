@@ -24,7 +24,7 @@ export function ShareAlbumDialog({
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Share className="w-6 h-6" />
+                <Share className="w-6 h-6 cursor-pointer" />
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
