@@ -22,10 +22,10 @@ export default async function PhotoCommentItem({
                 </Avatar>
                 <Card className="p-4 pb-2 relative w-full">
                     <div className="flex gap-2 justify-between">
-                        <p className="text-base font-bold leading-none text-primary">
+                        <p className="text-base font-bold text-primary">
                             <BasicTooltip title={`${comment.user.fullName}`} />
                         </p>
-                        <p className="text-base leading-none text-muted-foreground">
+                        <p className="text-base text-muted-foreground">
                             <BasicTooltip
                                 title={`${getFormatDistanceToNow(comment.createdAt)}`}
                             />

@@ -127,7 +127,7 @@ export const photoCommentSchema = z.object({
         .refine((val) => val.replace(/<[^>]+>/g, '').trim().length >= 1, {
             message: 'Comment can not empty',
         })
-        .refine((val) => val.replace(/<[^>]+>/g, '').trim().length <= 1000, {
-            message: 'Comment must be less than 1000 characters',
+        .refine((val) => val.replace(/<[^>]+>/g, '').trim().length <= 200, {
+            message: 'Comment must be less than 200 characters',
         }),
 });
