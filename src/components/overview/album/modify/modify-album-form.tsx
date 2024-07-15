@@ -1,6 +1,7 @@
 'use client';
 
 import { Icons } from '@/components/icons/icons';
+import { useSocket } from '@/components/socket-io-provider';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
@@ -32,6 +33,7 @@ export default function CreateAlbumForm({
     setOpen: (open: boolean) => void;
 }) {
     const router = useRouter();
+    const { socket } = useSocket();
     const [isLoading, setIsLoading] = useState(false);
     const [result, setResult] = useState<
         { error?: string; errorType?: string; isSuccess?: boolean } | undefined
@@ -55,6 +57,9 @@ export default function CreateAlbumForm({
             setResult(result);
         } else {
             toast.success('Album modified successfully');
+            if (socket && result?.data?.receivers) {
+                socket.emit(`sendNotification`, result?.data);
+            }
             setResult({ isSuccess: true });
             setOpen(false);
             router.refresh();

@@ -219,9 +219,13 @@ export const getRecentViewPhotos = async (limit: number) => {
 
 export const getReactList = async (photoId: string) => {
     try {
+        console.log(1);
         const response = await http.get(`/photos/${photoId}/reacts`);
+        console.log(2);
         return response.data as ReactUser[];
     } catch (error) {
+        console.log(error);
+        console.log(3);
         return [] as ReactUser[];
     }
 };

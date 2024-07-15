@@ -608,14 +608,17 @@ export const modifyGroup = async (
     groupId: string,
     formData: z.infer<typeof modifyGroupFormSchema>
 ) => {
-    const { title, description, groupImg }: z.infer<typeof modifyGroupFormSchema> =
-        formData;
+    const {
+        title,
+        description,
+        groupImg,
+    }: z.infer<typeof modifyGroupFormSchema> = formData;
 
     const response = await http
         .put(`/groups/${groupId}/modify`, {
             title,
             description,
-            groupImg
+            groupImg,
         })
         .then((res) => {
             return {
@@ -740,7 +743,6 @@ export const outGroup = async (groupId: string) => {
     return response;
 };
 
-
 export const modifyAlbum = async (
     albumId: string,
     formData: z.infer<typeof createAlbumFormSchema>
@@ -751,18 +753,20 @@ export const modifyAlbum = async (
     const response = await http
         .put(`/albums/${albumId}/modify`, {
             title,
-            description
+            description,
         })
         .then((res) => {
             return {
                 isSuccess: true,
                 error: '',
+                data: res.data as UserNotification,
             };
         })
         .catch((error) => {
             return {
                 isSuccess: false,
                 error: error?.response?.data?.error.message || 'Unknown error',
+                data: null,
             };
         });
 
@@ -777,4 +781,3 @@ export const getReactList = async (photoId: string) => {
         return [] as ReactUser[];
     }
 };
-

@@ -168,6 +168,10 @@ export default function PhotoUploadForm({
                     options
                 );
 
+                if (imageFile.size > 2 * 1024 * 1024) {
+                    throw new Error('File size is too large');
+                }
+
                 formData.set('image', compressedFile);
 
                 const result = await axios
@@ -243,9 +247,8 @@ export default function PhotoUploadForm({
                 } else {
                     removeFile(acceptedFiles[0]);
                     toast.error(
-                        'Error uploading files: ' +
+                        'Error uploading files: ' + error.message ||
                             error?.response?.data?.error?.message ||
-                            error ||
                             'Unknown error'
                     );
                 }
