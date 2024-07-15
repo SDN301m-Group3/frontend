@@ -51,6 +51,7 @@ export function KickGroupMemberDialog({
             }
             toast.success('There is an imposter among us');
             setResult({ isSuccess: true });
+            router.refresh();
         }
         setIsLoading(false);
     };
