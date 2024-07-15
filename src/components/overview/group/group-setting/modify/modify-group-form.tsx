@@ -1,6 +1,6 @@
 'use client';
 
-import {  modifyGroupFormSchema } from '@/lib/form-schema';
+import { modifyGroupFormSchema } from '@/lib/form-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -23,7 +23,7 @@ import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { GroupInfo } from '@/lib/define';
-
+import { useSocket } from '@/components/socket-io-provider';
 
 export default function ModifyGroupForm({
     group,
@@ -32,6 +32,7 @@ export default function ModifyGroupForm({
     group: GroupInfo;
     setOpen: (open: boolean) => void;
 }) {
+    const { socket } = useSocket();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [result, setResult] = useState<
@@ -57,9 +58,11 @@ export default function ModifyGroupForm({
             setResult(result);
         } else {
             toast.success('Group modified successfully');
+            if (socket && result?.data?.receivers) {
+                socket.emit(`sendNotification`, result?.data);
+            }
             setResult({ isSuccess: true });
             setOpen(false);
-            router.push('/group');
             router.refresh();
         }
         setIsLoading(false);

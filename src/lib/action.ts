@@ -624,12 +624,14 @@ export const modifyGroup = async (
             return {
                 isSuccess: true,
                 error: '',
+                data: res.data as UserNotification,
             };
         })
         .catch((error) => {
             return {
                 isSuccess: false,
                 error: error?.response?.data?.error.message || 'Unknown error',
+                data: null,
             };
         });
 
