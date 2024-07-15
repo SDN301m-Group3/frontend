@@ -67,7 +67,7 @@ export default function GroupInformation({
             </CardContent>
             {group.owner._id === user?.aud || (
                 <CardFooter className="flex justify-between">
-                    <OutGroupDialog />
+                    <OutGroupDialog group={group} />
                 </CardFooter>
             )}
         </Card>
