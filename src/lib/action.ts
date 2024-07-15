@@ -669,9 +669,9 @@ export const editPhoto = async (
         });
 };
 
-export const deletePhoto = async (photoId: string) => {
+export const deletePhoto = async (photoId: string, albumId: string) => {
     return await http
-        .delete(`/photos/${photoId}`)
+        .delete(`albums/${albumId}/photos/${photoId}`)
         .then((res) => {
             return {
                 isSuccess: true,
