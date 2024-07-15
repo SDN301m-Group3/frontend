@@ -11,6 +11,7 @@ import {
     PhotoComment,
     PhotoDetail,
     PhotoReact,
+    ReactUser,
     RecentPhoto,
     SearchAlbumParams,
     SearchPhotoCommentParams,
@@ -214,5 +215,14 @@ export const getRecentViewPhotos = async (limit: number) => {
         return response.data as RecentPhoto[];
     } catch (error) {
         return [] as RecentPhoto[];
+    }
+};
+
+export const getReactList = async (photoId: string) => {
+    try {
+        const response = await http.get(`/photos/${photoId}/reacts`);
+        return response.data as ReactUser[];
+    } catch (error) {
+        return [] as ReactUser[];
     }
 };

@@ -6,6 +6,7 @@ import { PhotoDetail, User } from '@/lib/define';
 import { FilePenLine, Heart, MessageCircle } from 'lucide-react';
 import PhotoLikeAction from './photo-like-action';
 import { EditPhotoDialog } from './edit-photo-dialog';
+import ReactListDialog from './react-list-dialog';
 
 export default function PhotoAction({
     photo,
@@ -21,10 +22,7 @@ export default function PhotoAction({
     return (
         <div>
             <div className="flex gap-4 mt-3">
-                <div className="flex gap-2 items-center">
-                    <Heart className="w-4 h-4" />
-                    <span>{photo.totalReact}</span>
-                </div>
+                <ReactListDialog photo={photo} />
                 <div className="flex gap-2 items-center">
                     <MessageCircle className="w-4 h-4" />
                     <span>{photo.totalComment}</span>

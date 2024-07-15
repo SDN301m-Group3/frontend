@@ -266,6 +266,19 @@ export type PhotoReact = {
     };
 };
 
+export type ReactUser = {
+    _id: string;
+    user: {
+        _id: string;
+        fullName: string;
+        username: string;
+        email: string;
+        img: string;
+    };
+    createdAt: string;
+    updatedAt: string;
+};
+
 export type PhotoComment = {
     _id: string;
     content: string;
