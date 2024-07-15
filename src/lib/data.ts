@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {
     Album,
     AlbumInfo,
@@ -11,6 +10,7 @@ import {
     PhotoComment,
     PhotoDetail,
     PhotoReact,
+    ReactUser,
     RecentPhoto,
     SearchAlbumParams,
     SearchPhotoCommentParams,
@@ -20,7 +20,7 @@ import {
 } from './define';
 import http from '@/config/axios';
 
-axios.defaults.baseURL = process.env.API_URL;
+// axios.defaults.baseURL = process.env.API_URL;
 
 export async function getMyGroups() {
     return await http
@@ -214,5 +214,14 @@ export const getRecentViewPhotos = async (limit: number) => {
         return response.data as RecentPhoto[];
     } catch (error) {
         return [] as RecentPhoto[];
+    }
+};
+
+export const getReactList = async (photoId: string) => {
+    try {
+        const response = await http.get(`/photos/${photoId}/reacts`);
+        return response.data as ReactUser[];
+    } catch (error) {
+        return [] as ReactUser[];
     }
 };
