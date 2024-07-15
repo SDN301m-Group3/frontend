@@ -168,7 +168,7 @@ export default function PhotoUploadForm({
                     options
                 );
 
-                if (imageFile.size > 2 * 1024 * 1024) {
+                if (imageFile.size > 10 * 1024 * 1024) {
                     throw new Error('File size is too large');
                 }
 
