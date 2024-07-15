@@ -14,6 +14,7 @@ import { cookies } from 'next/headers';
 import {
     AuthResponse,
     DemoUser,
+    ReactUser,
     SearchUser,
     User,
     UserNotification,
@@ -707,4 +708,13 @@ export const outGroup = async (groupId: string) => {
         });
 
     return response;
+};
+
+export const getReactList = async (photoId: string) => {
+    try {
+        const response = await http.get(`/photos/${photoId}/reacts`);
+        return response.data as ReactUser[];
+    } catch (error) {
+        return [] as ReactUser[];
+    }
 };

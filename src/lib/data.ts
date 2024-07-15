@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {
     Album,
     AlbumInfo,
@@ -21,7 +20,7 @@ import {
 } from './define';
 import http from '@/config/axios';
 
-axios.defaults.baseURL = process.env.API_URL;
+// axios.defaults.baseURL = process.env.API_URL;
 
 export async function getMyGroups() {
     return await http

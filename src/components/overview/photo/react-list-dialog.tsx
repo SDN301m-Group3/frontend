@@ -10,33 +10,33 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { getReactList } from '@/lib/data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import SpinLoading from '@/components/shared/spin-loading';
+import { getReactList } from '@/lib/action';
+import { Button } from '@/components/ui/button';
 
 export default function ReactListDialog({ photo }: { photo: PhotoDetail }) {
     const [reacts, setReacts] = useState([] as ReactUser[]);
-    const [loading, setLoading] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        setLoading(true);
-        getReactList(photo._id).then((data) => {
-            setReacts(data);
-            setLoading(false);
-        });
-    }, [photo._id]);
-
-    if (loading) {
-        return <SpinLoading />;
-    }
+        if (isOpen) {
+            getReactList(photo._id).then((data) => {
+                setReacts(data);
+            });
+        }
+    }, [photo, isOpen]);
 
     return (
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
-                <div className="flex gap-2 items-center">
+                <div
+                    className="flex gap-2 items-center cursor-pointer"
+                    onClick={() => setIsOpen(true)}
+                >
                     <Heart className="w-4 h-4" />
                     <span>{photo.totalReact}</span>
                 </div>
