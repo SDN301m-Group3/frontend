@@ -29,7 +29,7 @@ export function DeletePhotoDialog({ photo }: { photo: PhotoDetail }) {
 
     const handleDeletePhoto = async () => {
         setIsLoading(true);
-        const result = await deletePhoto(photo._id);
+        const result = await deletePhoto(photo._id, photo.album._id);
         if (result?.isSuccess) {
             if (socket && result?.data?.receivers) {
                 socket.emit('sendNotification', result?.data);
