@@ -740,6 +740,35 @@ export const outGroup = async (groupId: string) => {
     return response;
 };
 
+
+export const modifyAlbum = async (
+    albumId: string,
+    formData: z.infer<typeof createAlbumFormSchema>
+) => {
+    const { title, description }: z.infer<typeof createAlbumFormSchema> =
+        formData;
+
+    const response = await http
+        .put(`/albums/${albumId}/modify`, {
+            title,
+            description
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error?.response?.data?.error.message || 'Unknown error',
+            };
+        });
+
+    return response;
+};
+
 export const getReactList = async (photoId: string) => {
     try {
         const response = await http.get(`/photos/${photoId}/reacts`);
@@ -748,3 +777,4 @@ export const getReactList = async (photoId: string) => {
         return [] as ReactUser[];
     }
 };
+

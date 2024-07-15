@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { AlbumInfo, GroupInfo, User } from '@/lib/define';
+import { AlbumInfo, User } from '@/lib/define';
 import { Settings } from 'lucide-react';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -8,6 +8,7 @@ import { getUser } from '@/lib/action';
 import { cn } from '@/lib/utils';
 import AlbumInformation from './album-info';
 import AlbumMembersSetting from './album-members-setting';
+import AlbumSetting from './album-setting';
 
 export default async function AlbumSettingDialog({
     album,
@@ -46,7 +47,9 @@ export default async function AlbumSettingDialog({
                     <TabsContent value="members">
                         <AlbumMembersSetting album={album} user={user} />
                     </TabsContent>
-                    <TabsContent value="Setting">Setting</TabsContent>
+                    <TabsContent value="Setting">
+                    <AlbumSetting album={album} user={user} />
+                    </TabsContent>
                 </Tabs>
             </DialogContent>
         </Dialog>
