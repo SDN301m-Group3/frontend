@@ -88,7 +88,7 @@ export default function Notification({ user }: { user: User }) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-4 cursor-pointer">
                     <div className="relative">
                         <button className="focus:outline-none">
                             <Bell size={24} />

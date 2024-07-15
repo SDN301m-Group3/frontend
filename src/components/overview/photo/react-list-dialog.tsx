@@ -14,9 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import SpinLoading from '@/components/shared/spin-loading';
-import { Button } from '@/components/ui/button';
-import { getReactList } from '@/lib/data';
+import { getReactList } from '@/lib/action';
 
 export default function ReactListDialog({ photo }: { photo: PhotoDetail }) {
     const [reacts, setReacts] = useState([] as ReactUser[]);
@@ -26,7 +24,6 @@ export default function ReactListDialog({ photo }: { photo: PhotoDetail }) {
         if (isOpen) {
             console.log('get react list');
             getReactList(photo._id).then((data) => {
-                console.log(data);
                 setReacts(data);
             });
         }
