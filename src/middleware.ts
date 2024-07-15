@@ -7,9 +7,15 @@ export const config = {
 
 const apiRequireAuth = ['/api/auth/update-token'];
 
-const urlRequireAuthenticated = ['/group', '/group/*', '/album', '/album/*'];
+const urlRequireAuthenticated = [
+    '/group',
+    '/group/*',
+    '/album',
+    '/album/*',
+    '/photo/*',
+];
 
-const urlRequireUnauthenticated = ['/login', '/register'];
+const urlRequireUnauthenticated = ['/login', '/register', '/active/*'];
 
 function isValidUrl(route: string, urlList: string[]) {
     return urlList.some((pattern) => {

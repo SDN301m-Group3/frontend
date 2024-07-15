@@ -23,7 +23,7 @@ import { getImageSize } from 'react-image-size';
 import http from '@/config/axios';
 // import cookie from '@boiseitguru/cookie-cutter';
 
-const maxAgeRefreshToken = 60 * 60 * 24 * 365;
+const maxAgeRefreshToken = 60 * 60 * 24 * 7;
 
 export async function refreshAccessToken(token: string) {
     return await axios
@@ -88,6 +88,15 @@ export async function getUser() {
     return user ? (JSON.parse(user.value) as User) : null;
 }
 
+function base64Decode(str: string) {
+    // Convert Base64 encoded bytes to percent-encoding, and then get the original string.
+    const percentEncodedStr = atob(str.replace(/_/g, '/').replace(/-/g, '+'))
+        .split('')
+        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('');
+    return decodeURIComponent(percentEncodedStr);
+}
+
 export const login = async (formData: z.infer<typeof loginFormSchema>) => {
     try {
         const { email, password }: z.infer<typeof loginFormSchema> = formData;
@@ -99,7 +108,7 @@ export const login = async (formData: z.infer<typeof loginFormSchema>) => {
             .then((res) => {
                 const { accessToken, refreshToken } = res.data;
 
-                let payload = atob(accessToken.split('.')[1]);
+                let payload = base64Decode(accessToken.split('.')[1]);
                 const cookie = cookies();
                 const user = JSON.parse(payload) as User;
                 cookie.set('refresh-token', refreshToken, {
@@ -622,3 +631,90 @@ export const modifyGroup = async (
 
     return response;
 };
+
+export const shareAlbum = async (albumId: string, time: number) => {
+    const response = await http
+        .post(`/albums/${albumId}/share`, {
+            time,
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+                data: res.data,
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error?.response?.data?.error.message || 'Unknown error',
+                data: null,
+            };
+        });
+    return response;
+};
+
+export const active = async (token: string, active: string) => {
+    return await http
+        .get(`/auth/activate/${token}`, {
+            params: { active },
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+                message: res.data.message,
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error?.response?.data?.error.message || 'Unknown error',
+                message: '',
+            };
+        });
+};
+
+export const editPhoto = async (
+    photoId: string,
+    title: string,
+    tags: string[]
+) => {
+    return await http
+        .patch(`/photos/${photoId}`, {
+            title,
+            tags,
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error?.response?.data?.error.message || 'Unknown error',
+            };
+        });
+};
+
+export const deletePhoto = async (photoId: string) => {
+    return await http
+        .delete(`/photos/${photoId}`)
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+                data: res.data as UserNotification,
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error?.response?.data?.error.message || 'Unknown error',
+                data: null,
+            };
+        });
+};
+

@@ -19,6 +19,7 @@ export default function ActionSection({
                 photo={photo}
                 openComment={openComment}
                 setOpenComment={setOpenComment}
+                user={user}
             />
             {openComment && <Comment user={user} photo={photo} />}
         </>

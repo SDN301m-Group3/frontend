@@ -183,6 +183,14 @@ export type SearchPhotoParams = {
     mode?: string;
 };
 
+export type SearchSharePhotoParams = {
+    sort?: string;
+    page?: number;
+    pageSize?: number;
+    search?: string;
+    shareToken?: string;
+};
+
 export type SearchPhotoCommentParams = {
     page?: number;
     pageSize?: number;
@@ -225,6 +233,7 @@ export type PhotoDetail = {
     title: string;
     tags: string[];
     url: string;
+    mimeType: string;
     createdAt: string;
     owner: {
         _id: string;

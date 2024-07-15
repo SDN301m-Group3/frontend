@@ -8,7 +8,7 @@ export default function ButtonLogin() {
     const pathname = usePathname();
     return (
         <Button asChild>
-            <Link href={`/login?callbackUrl=${pathname}`}>Đăng nhập</Link>
+            <Link href={`/login?callbackUrl=${pathname}`}>Login</Link>
         </Button>
     );
 }

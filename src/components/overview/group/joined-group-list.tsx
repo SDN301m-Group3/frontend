@@ -5,8 +5,8 @@ export default async function JoinedGroupList() {
     const groups = await getJoinedGroups();
     if (groups.length === 0) {
         return (
-            <div className="text-center">
-                <p className="mt-2">No group found</p>
+            <div className="flex justify-center items-center h-24">
+                No group found
             </div>
         );
     }

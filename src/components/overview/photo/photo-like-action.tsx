@@ -50,7 +50,7 @@ export default function PhotoLikeAction({
             {isLike ? (
                 <>
                     <HeartFilledIcon className="w-7 h-7" />
-                    <span className="max-md:hidden">Liked</span>
+                    {/* <span className="max-md:hidden">Liked</span> */}
                 </>
             ) : (
                 <>

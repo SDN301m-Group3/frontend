@@ -3,13 +3,12 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { getUser } from '@/lib/action';
-import { AlbumInfo, GroupInfo, User } from '@/lib/define';
+import { AlbumInfo, User } from '@/lib/define';
 import { getDateFormatted } from '@/lib/utils';
+import { ShareAlbumDialog } from './share-album-dialog';
 
 export default function AlbumInformation({
     album,
@@ -21,7 +20,10 @@ export default function AlbumInformation({
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="line-clamp-1">{album.title}</CardTitle>
+                <CardTitle className="line-clamp-1 flex gap-2 justify-between">
+                    <p>{album.title}</p>
+                    <ShareAlbumDialog album={album} user={user} />
+                </CardTitle>
                 <CardDescription className="line-clamp-2">
                     {album.description}
                 </CardDescription>
