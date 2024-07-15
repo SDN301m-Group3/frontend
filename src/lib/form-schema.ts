@@ -131,3 +131,18 @@ export const photoCommentSchema = z.object({
             message: 'Comment must be less than 200 characters',
         }),
 });
+
+export const modifyGroupFormSchema = z.object({
+    title: z
+        .string({ required_error: 'Group name can not empty' })
+        .min(3, { message: 'Group name must be at least 3 characters' })
+        .max(50, { message: 'Group name must be maximum 50 characters' }),
+    description: z
+        .string()
+        .optional()
+        .or(z.literal(''))
+        .transform((e) => (e === '' ? undefined : e)),
+    groupImg: z.any({
+        required_error: 'Image can not empty',
+    }),
+});

@@ -7,6 +7,7 @@ import {
     loginFormSchema,
     registerFormSchema,
     joinGroupSchema,
+    modifyGroupFormSchema,
 } from './form-schema';
 import axios from '@/config/axios';
 import { AxiosError, AxiosProgressEvent, CancelTokenSource } from 'axios';
@@ -599,6 +600,35 @@ export const reactPhoto = async (photoId: string) => {
                 data: null,
             };
         });
+    return response;
+};
+
+export const modifyGroup = async (
+    groupId: string,
+    formData: z.infer<typeof modifyGroupFormSchema>
+) => {
+    const { title, description, groupImg }: z.infer<typeof modifyGroupFormSchema> =
+        formData;
+
+    const response = await http
+        .put(`/groups/${groupId}/modify`, {
+            title,
+            description,
+            groupImg
+        })
+        .then((res) => {
+            return {
+                isSuccess: true,
+                error: '',
+            };
+        })
+        .catch((error) => {
+            return {
+                isSuccess: false,
+                error: error?.response?.data?.error.message || 'Unknown error',
+            };
+        });
+
     return response;
 };
 

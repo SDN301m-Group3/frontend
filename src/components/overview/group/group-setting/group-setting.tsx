@@ -12,6 +12,8 @@ import {
 import { GroupInfo, User } from '@/lib/define';
 import { getDateFormatted } from '@/lib/utils';
 import RemoveGroupDialog from './remove-group-dialog';
+import GroupModifyDialog from './modify/modify-group-dialog';
+import { Button } from '@/components/ui/button';
 
 export default function GroupSetting({
     group,
@@ -70,6 +72,7 @@ export default function GroupSetting({
                 </CardContent>
                 <CardFooter className="flex justify-between">
                     <RemoveGroupDialog group={group} />
+                    <Button><GroupModifyDialog group={group} /></Button>
                 </CardFooter>
             </Card>
         </>
